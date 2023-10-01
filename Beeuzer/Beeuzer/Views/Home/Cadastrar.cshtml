@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<main>
+    <div class="row">
+        <center>
+            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                <input type="text" placeholder="Nome" />
+                <br><br>
+                <input type="email" placeholder="Email" />
+                <br><br>
+                <input type="password" placeholder="Senha" />
+                <br><br>
+                <input type="password" placeholder="Confirmar senha" />
+                <br><br>
+
+                <button class="btn btn-success btn-lg">
+                    @Html.ActionLink("Cadastrar", "Entrar", "Home", new { area = "" }, new { @class = "nav-link" })
+                </button>
+                <br><br>
+                <button class="btn btn-outline-secondary">
+                    @Html.ActionLink("Já tem uma conta? Faça login", "Entrar", "Home", new { area = "" }, new { @class = "nav-link" })
+                </button>
+            </section>
+        </center>
+    </div>
+
+    <style>
+        input {
+            border-radius: 6px;
+        }
+    </style>
+</main>

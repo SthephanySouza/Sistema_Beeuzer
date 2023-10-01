@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "Entrar";
+}
+
+<main>
+    <div class="row">
+        <center>
+            <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+                <input type="text" placeholder="Nome" />
+                <br><br>
+                <input type="password" placeholder="Senha" />
+                    <br><br>
+
+                <button class="btn btn-success btn-lg">
+                    @Html.ActionLink("Entrar", "Index", "Home", new { area = "" }, new { @class = "nav-link" })
+                </button>
+                    <br><br>
+                <button class="btn btn-outline-secondary">
+                    @Html.ActionLink("Fazer Cadastro", "Cadastrar", "Home", new { area = "" }, new { @class = "nav-link" })
+                </button>
+            </section>
+        </center>
+    </div>
+
+    <style>
+        input{
+            border-radius: 6px;
+        }
+    </style>
+</main>

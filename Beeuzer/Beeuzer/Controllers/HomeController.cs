@@ -13,17 +13,27 @@ namespace Beeuzer.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Caixa()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Carrinho()
         {
             ViewBag.Message = "Your contact page.";
 
+            return View();
+        }
+
+        public ActionResult Entrar()
+        {
+            return View();
+        }
+
+        public ActionResult Cadastrar()
+        {
             return View();
         }
     }
