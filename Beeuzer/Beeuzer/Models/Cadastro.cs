@@ -21,6 +21,10 @@ namespace Beeuzer.Models
         public string Nome { get; set; }
 
         [Required]
+        public int NumEnd { get; set; }
+        public string CompleEnd { get; set; }
+
+        [Required]
         public int Cpf { get; set; }
 
         [Required]
@@ -44,7 +48,7 @@ namespace Beeuzer.Models
             comand.CommandText = "call spInsertCad(@Nome, @Senha, @Cpf, @Email, @Telefone, @Cep, @NumEnd, @CompleEnd, @Logradouro, @NomeBairro, @NomeCidade, @TipoAcesso)";
             comand.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = cliente.Nome;
             comand.Parameters.Add("@Senha", MySqlDbType.VarChar).Value = cliente.Senha;
-            comand.Parameters.Add("@Cpf", MySqlDbType.Decimal).Value = cliente.Cpf;
+            comand.Parameters.Add("@Cpf", MySqlDbType.Int64).Value = cliente.Cpf;
             comand.Parameters.Add("@Email", MySqlDbType.VarChar).Value = cliente.Email;
             comand.Parameters.Add("@Telefone", MySqlDbType.Int64).Value = cliente.Telefone;
             comand.Parameters.Add("@Cep", MySqlDbType.Int64).Value = cliente.Cep;
@@ -61,8 +65,8 @@ namespace Beeuzer.Models
         public string SelectLogin(string vLogin)
         {
             Conexao.Open();
-            comand.CommandText = "call spSelectLogin(@Login);";
-            comand.Parameters.Add("@Login", MySqlDbType.VarChar).Value = vLogin;
+            comand.CommandText = "call spSelectLogin(@Email);";
+            comand.Parameters.Add("@Email", MySqlDbType.VarChar).Value = vLogin;
             comand.Connection = Conexao;
             string Login = (string)comand.ExecuteScalar();
             Conexao.Close();
@@ -76,8 +80,8 @@ namespace Beeuzer.Models
         public Cadastro SelectCad(string vLogin)
         {
             Conexao.Open();
-            comand.CommandText = "call spSelectCli(@Login);";
-            comand.Parameters.Add("@Login", MySqlDbType.VarChar).Value = vLogin;
+            comand.CommandText = "call spSelectCad(@Email);";
+            comand.Parameters.Add("@Email", MySqlDbType.VarChar).Value = vLogin;
             comand.Connection = Conexao;
 
             var readCliente = comand.ExecuteReader();
@@ -89,6 +93,8 @@ namespace Beeuzer.Models
                 TempCliente.Nome = readCliente["Nome"].ToString();
                 TempCliente.CompleEnd = readCliente["CompleEnd"].ToString();
                 TempCliente.NumEnd = int.Parse(readCliente["NumEnd"].ToString());
+                TempCliente.Cep = int.Parse(readCliente["Cep"].ToString());
+                TempCliente.Cpf = int.Parse(readCliente["Cpf"].ToString());
                 TempCliente.Email = readCliente["Email"].ToString();
                 TempCliente.Logradouro = readCliente["Logradouro"].ToString();
                 TempCliente.NomeBairro = readCliente["NomeBairro"].ToString();

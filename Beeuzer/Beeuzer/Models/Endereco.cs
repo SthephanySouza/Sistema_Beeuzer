@@ -14,10 +14,6 @@ namespace Beeuzer.Models
         public int Cep { get; set; }
 
         [Required]
-        public int NumEnd { get; set; }
-        public string CompleEnd { get; set; }
-
-        [Required]
         [MaxLength(255)]
         public string Logradouro { get; set; }
 
@@ -28,19 +24,5 @@ namespace Beeuzer.Models
         [Required]
         [MaxLength(200)]
         public string NomeBairro { get; set; }
-        /* public string UF { get; set; }
-
-        public IEnumerable<SelectListItem> Uf
-        {
-            get
-            {
-                return new List<SelectListItem>
-                {
-                    new SelectListItem { Text = "SP", Value = "SP" },
-                    new SelectListItem { Text = "RJ", Value = "RJ" },
-                    new SelectListItem { Text = "RS", Value = "RS" }
-                };
-            }
-        } */
     }
 }

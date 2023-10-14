@@ -70,7 +70,7 @@ namespace Beeuzer.Controllers
             return View(viewmodel);
         }
 
-        /* [HttpPost]
+        [HttpPost]
         public ActionResult Login(LoginViewModel viewmodel)
         {
             if (!ModelState.IsValid)
@@ -101,14 +101,14 @@ namespace Beeuzer.Controllers
                 ModelState.AddModelError("Login", "Login incorreto");
                 return View(viewmodel);
             }
-            if (cadastro.Senha != Hash.GerarHash(viewmodel.Senha))
+            if (cadastro.Senha != viewmodel.Senha)
             {
                 ModelState.AddModelError("Senha", "Senha incorreta");
                 return View(viewmodel);
             }
 
             var identity = new ClaimsIdentity(new[]
-            {
+                {
                 new Claim(ClaimTypes.Name, cadastro.Email),
                 new Claim("Login", cadastro.Email)
             }, "AppAplicationCookie");
@@ -119,7 +119,7 @@ namespace Beeuzer.Controllers
                 return Redirect(viewmodel.UrlRetorno);
             else
                 return RedirectToAction("Index", "Administrativo");
-        } */
+        }
 
         public ActionResult Logout()
         {
