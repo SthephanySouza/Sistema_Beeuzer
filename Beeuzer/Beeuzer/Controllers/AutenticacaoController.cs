@@ -34,12 +34,6 @@ namespace Beeuzer.Controllers
                 Email = viewModel.Email,
                 Cpf = viewModel.Cpf,
                 Telefone = viewModel.Telefone,
-                Cep = viewModel.Cep,
-                NumEnd = viewModel.NumEnd,
-                CompleEnd = viewModel.CompleEnd,
-                Logradouro = viewModel.Logradouro,
-                NomeBairro = viewModel.NomeBairro,
-                NomeCidade = viewModel.NomeCidade,
                 Senha = viewModel.Senha,
                 TipoAcesso = viewModel.TipoAcesso
             };

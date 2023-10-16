@@ -17,34 +17,13 @@ namespace Beeuzer.ViewModel
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Informe o login")]
+        [DataType(DataType.EmailAddress)]
         [MaxLength(55, ErrorMessage = "O login deve conter no máximo 55 caracteres")]
         [Remote("SelectLogin", "Autenticacao", ErrorMessage = "O login já existe!")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe seu telefone")]
         public int Telefone { get; set; }
-
-        [Required(ErrorMessage = "Informe seu CEP")]
-        [MaxLength(8, ErrorMessage = "O CEP deve conter no máximo 8 digitos")]
-        public int Cep { get; set; }
-
-        [Display(Name = "Número do endereço")]
-        [Required(ErrorMessage = "Informe o número do seu endereço")]
-        public int NumEnd { get; set; }
-
-        [Display(Name = "Complemento")]
-        public string CompleEnd { get; set; }
-
-        [Required(ErrorMessage = "Informe sua rua")]
-        public string Logradouro { get; set; }
-
-        [Display(Name = "Cidade")]
-        [Required(ErrorMessage = "Informe sua cidade")]
-        public string NomeCidade { get; set; }
-
-        [Display(Name = "Bairro")]
-        [Required(ErrorMessage = "Informe seu bairro")]
-        public string NomeBairro { get; set; }
 
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "Informe seu Cpf")]
