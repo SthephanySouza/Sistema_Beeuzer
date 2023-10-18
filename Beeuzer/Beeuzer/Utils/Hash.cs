@@ -5,7 +5,7 @@ using System.Web;
 using System.Text;
 using System.Security.Cryptography;
 
-namespace AppLoginAutenticacao.Utils
+namespace Beeuzer.Utils
 {
     public class Hash
     {

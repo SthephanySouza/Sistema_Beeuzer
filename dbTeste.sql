@@ -157,5 +157,21 @@ inner join tbl_cadastro on (tbl_login.IdLogin = tbl_cadastro.Login);
 
 select * from vwcadastro;
 
-/* truncate tbl_cdastro;
+delimiter $$
+create procedure spSelectLogin(vEmail varchar(250))
+begin
+	select Email from tbl_cadastro where Email = vEmail;
+end$$
+
+call spSelectLogin('Felipe@gmail.com');
+
+delimiter $$
+create procedure spSelectCad(vEmail varchar(250))
+begin
+	select * from tbl_cadastro where Email = vEmail;
+end$$
+
+call spSelectCad('Felipe@gmail.com');
+
+/* truncate tbl_cadastro;
 truncate tbl_login; */
