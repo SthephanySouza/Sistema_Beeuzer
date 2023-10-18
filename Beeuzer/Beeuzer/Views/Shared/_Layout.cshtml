@@ -21,10 +21,19 @@
                     <li>@Html.ActionLink("Caixas", "Caixa", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     @*<li>@Html.ActionLink("Carrinho", "Carrinho", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
                 </ul>
+
+                <ul class="navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Olá " + @User.Identity.Name, "", "", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
+                    }
+                    else
+                    {
+                            @Html.ActionLink("Entrar", "Login", "Autenticacao", new { area = "" }, new { @class = "nav-link" })
+                    }
+                </ul>
             </div>
-            <button class="btn btn-outline-secondary"> 
-                @Html.ActionLink("Cadastrar", "Cadastro", "Autenticacao", new { area = "" }, new { @class = "nav-link" })
-            </button>
         </div>
     </nav>
 

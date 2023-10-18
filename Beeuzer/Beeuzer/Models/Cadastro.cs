@@ -1,4 +1,4 @@
-﻿        using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,7 +21,7 @@ namespace Beeuzer.Models
         public string Nome { get; set; }
 
         [Required]
-        public int Cpf { get; set; }
+        public string Cpf { get; set; }
 
         [Required]
         [MaxLength(250)]
@@ -32,7 +32,7 @@ namespace Beeuzer.Models
         public string Senha { get; set; }
 
         [Required]
-        public int Telefone { get; set; }
+        public string Telefone { get; set; }
 
         [Required]
         [MaxLength(50)]
@@ -44,9 +44,9 @@ namespace Beeuzer.Models
             comand.CommandText = "call spInsertCad(@Nome, @Senha, @Cpf, @Email, @Telefone, @TipoAcesso)";
             comand.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = cliente.Nome;
             comand.Parameters.Add("@Senha", MySqlDbType.VarChar).Value = cliente.Senha;
-            comand.Parameters.Add("@Cpf", MySqlDbType.Int64).Value = cliente.Cpf;
+            comand.Parameters.Add("@Cpf", MySqlDbType.VarChar).Value = cliente.Cpf;
             comand.Parameters.Add("@Email", MySqlDbType.VarChar).Value = cliente.Email;
-            comand.Parameters.Add("@Telefone", MySqlDbType.Int64).Value = cliente.Telefone;
+            comand.Parameters.Add("@Telefone", MySqlDbType.VarChar).Value = cliente.Telefone;
             comand.Parameters.Add("@TipoAcesso", MySqlDbType.VarChar).Value = cliente.TipoAcesso;
             comand.Connection = Conexao;
             comand.ExecuteNonQuery();
@@ -82,10 +82,10 @@ namespace Beeuzer.Models
             {
                 TempCliente.IdCad = int.Parse(readCliente["IdCad"].ToString());
                 TempCliente.Nome = readCliente["Nome"].ToString();
-                TempCliente.Cpf = int.Parse(readCliente["Cpf"].ToString());
+                TempCliente.Cpf = readCliente["Cpf"].ToString();
                 TempCliente.Email = readCliente["Email"].ToString();
                 TempCliente.Senha = readCliente["Senha"].ToString();
-                TempCliente.Telefone = int.Parse(readCliente["Telefone"].ToString());
+                TempCliente.Telefone = readCliente["Telefone"].ToString();
             }
             readCliente.Close();
             Conexao.Close();

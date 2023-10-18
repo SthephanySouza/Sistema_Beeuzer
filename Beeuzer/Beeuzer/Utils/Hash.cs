@@ -18,7 +18,7 @@ namespace Beeuzer.Utils
 
             StringBuilder result = new StringBuilder();
 
-            for (int i = 0; i < hash.Length; i++)
+            for(int i = 0; i < hash.Length;  i++)
             {
                 result.Append(hash[i].ToString("x"));
             }

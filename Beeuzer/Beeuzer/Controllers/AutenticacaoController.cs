@@ -1,5 +1,6 @@
 ﻿using Beeuzer.Models;
 using Beeuzer.ViewModel;
+using Hash = Beeuzer.Utils.Hash;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace Beeuzer.Controllers
                 Email = viewModel.Email,
                 Cpf = viewModel.Cpf,
                 Telefone = viewModel.Telefone,
-                Senha = viewModel.Senha,
+                Senha = Hash.GerarHash(viewModel.Senha),
                 TipoAcesso = viewModel.TipoAcesso
             };
             novoCad.InsertCad(novoCad);
@@ -88,14 +89,14 @@ namespace Beeuzer.Controllers
             }
 
             Cadastro cadastro = new Cadastro();
-            cadastro = cadastro.SelectCad(viewmodel.Login);
+            cadastro = cadastro.SelectCad(viewmodel.Email);
 
-            if (cadastro == null | cadastro.Email != viewmodel.Login)
+            if (cadastro == null | cadastro.Email != viewmodel.Email)
             {
                 ModelState.AddModelError("Login", "Login incorreto");
                 return View(viewmodel);
             }
-            if (cadastro.Senha != viewmodel.Senha)
+            if (cadastro.Senha != Hash.GerarHash(viewmodel.Senha))
             {
                 ModelState.AddModelError("Senha", "Senha incorreta");
                 return View(viewmodel);
@@ -112,13 +113,13 @@ namespace Beeuzer.Controllers
             if (!String.IsNullOrWhiteSpace(viewmodel.UrlRetorno) || Url.IsLocalUrl(viewmodel.UrlRetorno))
                 return Redirect(viewmodel.UrlRetorno);
             else
-                return RedirectToAction("Index", "Administrativo");
+                return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Logout()
         {
             Request.GetOwinContext().Authentication.SignOut("AppAplicationCookie");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Autenticacao");
         }
     }
 }

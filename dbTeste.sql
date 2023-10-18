@@ -149,9 +149,12 @@ select * from tbl_login;
 create view vwcadastro as
 select
 	tbl_cadastro.IdCad,
+	tbl_cadastro.Nome,
     tbl_cadastro.Cpf,
-    tbl_login.Login,
-    tbl_login.Senha
+    tbl_cadastro.Email,
+    tbl_cadastro.Telefone,
+    tbl_login.Senha,
+    tbl_login.TipoAcesso
 from tbl_login
 inner join tbl_cadastro on (tbl_login.IdLogin = tbl_cadastro.Login);
 
@@ -166,9 +169,9 @@ end$$
 call spSelectLogin('Felipe@gmail.com');
 
 delimiter $$
-create procedure spSelectCad(vEmail varchar(250))
+create procedure spSelectCad(vEmail varchar(50))
 begin
-	select * from tbl_cadastro where Email = vEmail;
+	select * from vwcadastro where Email = vEmail;
 end$$
 
 call spSelectCad('Felipe@gmail.com');

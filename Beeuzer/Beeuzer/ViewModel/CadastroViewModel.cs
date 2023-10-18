@@ -23,12 +23,13 @@ namespace Beeuzer.ViewModel
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe seu telefone")]
-        public int Telefone { get; set; }
+        [MaxLength(9, ErrorMessage = "O CPF deve conter 9 digitos")]
+        public string Telefone { get; set; }
 
         [Display(Name = "CPF")]
         [Required(ErrorMessage = "Informe seu Cpf")]
         [MaxLength(11, ErrorMessage = "O CPF deve conter 11 digitos")]
-        public int Cpf { get; set; }
+        public string Cpf { get; set; }
         
         [Display(Name = "Tipo de acesso")]
         [MaxLength(50, ErrorMessage = "O tipo de acesso deve conter no máximo 50 caracteres")]

@@ -270,7 +270,6 @@
     <Content Include="Views\Home\Caixa.cshtml" />
     <Content Include="Views\Home\Carrinho.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Autenticacao\Login.cshtml" />
     <Content Include="Views\Autenticacao\Cadastro.cshtml" />
   </ItemGroup>
   <ItemGroup>

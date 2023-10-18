@@ -18,7 +18,7 @@ namespace Beeuzer.ViewModel
 
         [Required(ErrorMessage = "Imforme o login")]
         [MaxLength(255, ErrorMessage = "O login deve conter até 50 caracteres")]
-        public string Login { get; set; }
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe a senha")]
         [MinLength(6, ErrorMessage = "A senha deve ter pelo menos 6 caracteres")]
