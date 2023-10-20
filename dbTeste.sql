@@ -163,18 +163,18 @@ select * from vwcadastro;
 delimiter $$
 create procedure spSelectLogin(vEmail varchar(250))
 begin
-	select Email from tbl_cadastro where Email = vEmail;
+	select EmailCli from tbl_cliente where EmailCli = vEmail;
 end$$
 
 call spSelectLogin('Felipe@gmail.com');
 
 delimiter $$
-create procedure spSelectCad(vEmail varchar(50))
+create procedure spSelectCli(vEmail varchar(50))
 begin
-	select * from vwcadastro where Email = vEmail;
+	select * from vwcliente where Login = vEmail;
 end$$
 
-call spSelectCad('Felipe@gmail.com');
+call spSelectCli('Felipe@gmail.com');
 
 /* truncate tbl_cadastro;
 truncate tbl_login; */

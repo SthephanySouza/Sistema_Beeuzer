@@ -1,6 +1,8 @@
-﻿using Beeuzer.Models;
+﻿using Antlr.Runtime;
+using Beeuzer.Models;
+using Beeuzer.Utils;
 using Beeuzer.ViewModel;
-using Hash = Beeuzer.Utils.Hash;
+using Microsoft.Ajax.Utilities;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,6 @@ using System.Configuration;
 using System.Data;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Policy;
 using System.Web;
 using System.Web.Mvc;
 
@@ -16,10 +17,30 @@ namespace Beeuzer.Controllers
 {
     public class AutenticacaoController : Controller
     {
-        // GET: Autenticacao
+        public ActionResult Error(string mensagem)
+        {
+            ViewBag.error = "Entre em contato com o TI e passe a seguinte mensagem: {" + mensagem + "}";
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Cadastro()
         {
+            MySqlConnection conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
+            try
+            {
+                conexao.Open();
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", new { mensagem = e.Message });
+            }
+            finally
+            {
+                if (conexao.State == ConnectionState.Open)
+                    conexao.Close();
+            }
+
             return View();
         }
 
@@ -29,14 +50,13 @@ namespace Beeuzer.Controllers
             if(!ModelState.IsValid)
                 return View(viewModel);
 
-            Cadastro novoCad = new Cadastro
+            Cliente novoCad = new Cliente
             {
                 Nome = viewModel.Nome,
                 Email = viewModel.Email,
                 Cpf = viewModel.Cpf,
                 Telefone = viewModel.Telefone,
-                Senha = Hash.GerarHash(viewModel.Senha),
-                TipoAcesso = viewModel.TipoAcesso
+                Senha = Hash.GerarHash(viewModel.Senha)
             };
             novoCad.InsertCad(novoCad);
 
@@ -46,7 +66,7 @@ namespace Beeuzer.Controllers
         public ActionResult SelectLogin(string Login)
         {
             bool LoginExists;
-            string login = new Cadastro().SelectLogin(Login);
+            string login = new Cliente().SelectLogin(Login);
 
             if (login.Length == 0)
                 LoginExists = false;
@@ -88,8 +108,8 @@ namespace Beeuzer.Controllers
                     conexao.Close();
             }
 
-            Cadastro cadastro = new Cadastro();
-            cadastro = cadastro.SelectCad(viewmodel.Email);
+            Cliente cadastro = new Cliente();
+            cadastro = cadastro.SelectCli(viewmodel.Email);
 
             if (cadastro == null | cadastro.Email != viewmodel.Email)
             {
@@ -104,8 +124,8 @@ namespace Beeuzer.Controllers
 
             var identity = new ClaimsIdentity(new[]
                 {
-                new Claim(ClaimTypes.Name, cadastro.Email),
-                new Claim("Login", cadastro.Email)
+                new Claim(ClaimTypes.Name, cadastro.Nome),
+                new Claim("Nome", cadastro.Nome)
             }, "AppAplicationCookie");
 
             Request.GetOwinContext().Authentication.SignIn(identity);

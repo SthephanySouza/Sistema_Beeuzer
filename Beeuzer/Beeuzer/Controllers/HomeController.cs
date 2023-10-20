@@ -20,12 +20,12 @@ namespace Beeuzer.Controllers
             return View();
         }
 
-        public ActionResult Carrinho()
+        /* public ActionResult Carrinho()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
+        } */
 
         public ActionResult Entrar()
         {

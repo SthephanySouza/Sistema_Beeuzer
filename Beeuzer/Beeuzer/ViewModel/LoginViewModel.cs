@@ -12,10 +12,6 @@ namespace Beeuzer.ViewModel
     {
         public string UrlRetorno { get; set; }
 
-        [Display(Name = "Tipo de acesso")]
-        [Required(ErrorMessage = "Imforme seu tipo de acesso")]
-        public string TipoAcesso { get; set; }
-
         [Required(ErrorMessage = "Imforme o login")]
         [MaxLength(255, ErrorMessage = "O login deve conter até 50 caracteres")]
         public string Email { get; set; }

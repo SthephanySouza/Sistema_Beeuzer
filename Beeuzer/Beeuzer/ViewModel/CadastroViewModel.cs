@@ -30,11 +30,6 @@ namespace Beeuzer.ViewModel
         [Required(ErrorMessage = "Informe seu Cpf")]
         [MaxLength(11, ErrorMessage = "O CPF deve conter 11 digitos")]
         public string Cpf { get; set; }
-        
-        [Display(Name = "Tipo de acesso")]
-        [MaxLength(50, ErrorMessage = "O tipo de acesso deve conter no máximo 50 caracteres")]
-        [Required(ErrorMessage = "Informe seu tipo de acesso")]
-        public string TipoAcesso { get; set; }
 
         [Required(ErrorMessage = "Informe a senha")]
         [MaxLength(100, ErrorMessage = "A senha deve conter no máximo 100 caracteres")]

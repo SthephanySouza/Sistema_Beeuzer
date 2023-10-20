@@ -28,13 +28,13 @@ create table tbl_login(
 IdLogin bigint auto_increment primary key,
 TipoAcesso varchar(50) not null,
 Login varchar(55) not null,
-Senha varchar(55) not null
+Senha varchar(100) not null
 );
 
 create table tbl_cliente(
 IdCli int auto_increment primary key,
 NomeCli varchar(255) not null,
-Cpf varchar(11) not null,
+Cpf varchar(12) not null,
 Telefone varchar(9) not null,
 EmailCli varchar(250) not null,
 Login bigint,
@@ -192,7 +192,7 @@ from tbl_endereco inner join tbl_Cidade
 select * from vwEndereco;
 
 delimiter $$
-create procedure spInsertCli(vNomeCLi varchar(200), vEmailCli varchar(250), vSenha varchar(255), vCpf varchar(11), vTelefone varchar(9))
+create procedure spInsertCli(vNomeCLi varchar(200), vEmailCli varchar(250), vSenha varchar(100), vCpf varchar(12), vTelefone varchar(9))
 begin
 	if not exists(select Cpf from tbl_cliente where vCpf = Cpf) then
     if not exists(select EmailCli from tbl_cliente where vEmailCli = EmailCli) then
@@ -219,6 +219,9 @@ select * from tbl_login;
 create view vwcliente as
 select
 	tbl_cliente.IdCli,
+	tbl_cliente.NomeCli,
+    tbl_cliente.EmailCli,
+    tbl_cliente.Telefone,
     tbl_cliente.Cpf,
     tbl_login.Login,
     tbl_login.Senha
