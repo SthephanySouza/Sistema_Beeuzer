@@ -149,32 +149,13 @@ select * from tbl_login;
 create view vwcadastro as
 select
 	tbl_cadastro.IdCad,
-	tbl_cadastro.Nome,
     tbl_cadastro.Cpf,
-    tbl_cadastro.Email,
-    tbl_cadastro.Telefone,
-    tbl_login.Senha,
-    tbl_login.TipoAcesso
+    tbl_login.Login,
+    tbl_login.Senha
 from tbl_login
 inner join tbl_cadastro on (tbl_login.IdLogin = tbl_cadastro.Login);
 
 select * from vwcadastro;
 
-delimiter $$
-create procedure spSelectLogin(vEmail varchar(250))
-begin
-	select EmailCli from tbl_cliente where EmailCli = vEmail;
-end$$
-
-call spSelectLogin('Felipe@gmail.com');
-
-delimiter $$
-create procedure spSelectCli(vEmail varchar(50))
-begin
-	select * from vwcliente where Login = vEmail;
-end$$
-
-call spSelectCli('Felipe@gmail.com');
-
-/* truncate tbl_cadastro;
+/* truncate tbl_cdastro;
 truncate tbl_login; */

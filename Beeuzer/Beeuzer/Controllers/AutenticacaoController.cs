@@ -47,7 +47,7 @@ namespace Beeuzer.Controllers
         [HttpPost]
         public ActionResult Cadastro(CadastroViewModel viewModel)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
                 return View(viewModel);
 
             Cliente novoCad = new Cliente
@@ -113,7 +113,7 @@ namespace Beeuzer.Controllers
 
             if (cadastro == null | cadastro.Email != viewmodel.Email)
             {
-                ModelState.AddModelError("Login", "Login incorreto");
+                ModelState.AddModelError("Email", "Email incorreto");
                 return View(viewmodel);
             }
             if (cadastro.Senha != Hash.GerarHash(viewmodel.Senha))

@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Helpers;
 
+[assembly: OwinStartup(typeof(Beeuzer.App_Start.Startup))]
+
 namespace Beeuzer.App_Start
 {
     public class Startup

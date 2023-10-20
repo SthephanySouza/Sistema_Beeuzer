@@ -7,7 +7,6 @@
 <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color:black">
         <div class="text-muted">
-
             <h2>Login</h2>
 
             @using (Html.BeginForm())
@@ -44,12 +43,13 @@
             }
 
             <div>
-                @Html.ActionLink("Não possui cadastro? Crie um!", "Cadastro", "Autenticacao")
+                @Html.ActionLink("Não possui cadastro? Faça cadastro", "Cadastro", "Autenticacao")
             </div>
+
+            @section Scripts {
+                @Scripts.Render("~/bundles/jqueryval")
+            }
+      
         </div>
     </div>
 </div>
-            
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
