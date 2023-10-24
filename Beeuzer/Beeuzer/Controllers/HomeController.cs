@@ -20,6 +20,22 @@ namespace Beeuzer.Controllers
             return View();
         }
 
+        public ActionResult Caixa_Camisa()
+        {
+            return View();
+        }
+
+        public ActionResult Caixa_Calsa()
+        {
+            return View();
+        }
+
+        public ActionResult Caixa_Doacao()
+        {
+            return View();
+        }
+
+
         public ActionResult Carrinho()
         {
             ViewBag.Message = "Your contact page.";

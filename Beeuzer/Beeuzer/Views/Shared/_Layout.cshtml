@@ -26,7 +26,8 @@
                 <ul class="navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Olá " + @User.Identity.Name, "", "", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li><img class="icon_user" src="~/img/icon_user.png" /></li>
+                        <li>@Html.ActionLink(@User.Identity.Name, " ", " ", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else

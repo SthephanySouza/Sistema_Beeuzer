@@ -18,3 +18,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.icon_user{
+    width: 45px;
+    height: 45px;
+}

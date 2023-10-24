@@ -13,9 +13,11 @@ IdCidade int primary key auto_increment,
 NomeCidade varchar(200) not null
 );
 
-create table tbl_endereco(
+create table tbl_enderecoEntrega(
 Cep bigint primary key,
 Logradouro varchar(255) not null,
+NumEnd int null,
+CompleEnd varchar(50),
 idBairro int not null,
 foreign key (idBairro) references tbl_Bairro (IdBairro), 
 IdCidade int not null,
@@ -26,18 +28,15 @@ create table tbl_login(
 IdLogin bigint auto_increment primary key,
 TipoAcesso varchar(50) not null,
 Login varchar(55) not null,
-Senha varchar(55) not null
+Senha varchar(100) not null
 );
 
 create table tbl_cliente(
 IdCli int auto_increment primary key,
 NomeCli varchar(255) not null,
-NumEnd int null,
-CompleEnd varchar(50),
-Cpf decimal(11, 0) not null,
-Telefone bigint not null,
-CepCli bigint not null, 
-foreign key (CepCli) references tbl_endereco (Cep),
+Cpf varchar(12) not null,
+Telefone varchar(9) not null,
+EmailCli varchar(250) not null,
 Login bigint,
 foreign key (Login) references tbl_login (IdLogin)
 );
@@ -45,12 +44,9 @@ foreign key (Login) references tbl_login (IdLogin)
 create table tbl_funcionario(
 IdFunc int auto_increment primary key,
 NomeFunc varchar(255) not null,
-NumEnd int null,
-CompleEnd varchar(50),
-Cnpj decimal(14, 0) not null,
+Cpf varchar(11) not null,
 Telefone bigint not null,
-CepFunc bigint not null, 
-foreign key (CepFunc) references tbl_endereco (Cep),
+EmailFunc varchar(250) not null,
 Login bigint,
 foreign key (Login) references tbl_login (IdLogin)
 );
@@ -96,7 +92,9 @@ foreign key (idCliPed) references tbl_cliente (IdCli),
 Nf int,
 foreign key (Nf) references tbl_notafiscal (Nf),
 NumPaga int,
-foreign key (NumPaga) references tbl_pagamento (NumPaga)
+foreign key (NumPaga) references tbl_pagamento (NumPaga),
+LocalEntrega bigint,
+foreign key (LocalEntrega) references tbl_enderecoEntrega (Cep)
 );
 
 create table tbl_itemPedido(
@@ -147,6 +145,7 @@ begin
 end $$
 
 call spInserProd (12345678910111, "Caixa camisa", "Vermelho", "G", 54.61, 120);
+call spInserProd (12345678910114, "Caixa camisa", "Azul", "P", 54.61, 120);
 call spInserProd (12345678910112, "Caixa calça", "Azul", "P", 100.61, 100);
 call spInserProd (12345678910113, "Caixa doação", "Amarelo", "GG", 84.61, 50);
 
@@ -190,35 +189,30 @@ from tbl_endereco inner join tbl_Cidade
     on (tbl_endereco.idcidade = tbl_cidade.idcidade)
     inner join tbl_Bairro
     on (tbl_endereco.Idbairro = tbl_Bairro.IdBairro);
-    
+
 select * from vwEndereco;
 
 delimiter $$
-create procedure spInsertCli(vNomeCLi varchar(200), vSenha varchar(255), vCpf decimal(11, 0), vTelefone bigint, vCep bigint, vNumEnd int, vCompleEnd varchar(50), vLogradouro varchar(200), vNomeBairro varchar(50), vNomeCidade varchar(50))
+create procedure spInsertCli(vNomeCLi varchar(200), vEmailCli varchar(250), vSenha varchar(100), vCpf varchar(12), vTelefone varchar(9))
 begin
 	if not exists(select Cpf from tbl_cliente where vCpf = Cpf) then
-       if not exists(select Cep from tbl_endereco where vCep = Cep) then
-          if not exists(select IdBairro from tbl_Bairro where vNomeBairro = NomeBairro) then
-		  insert into tbl_Bairro(NomeBairro) values(vNomeBairro);
-          end if;
-		  if not exists(select IdCidade from tbl_Cidade where vNomeCidade = NomeCidade) then
-		  insert into tbl_Cidade(NomeCidade) values(vNomeCidade);
-          end if;
-          insert into tbl_endereco (Cep, Logradouro, idBairro, IdCidade)
-                    values(vCep, vLogradouro, (select idBairro from tbl_Bairro where vNomeBairro = NomeBairro),
-                       (select idCidade from tbl_Cidade where vNomeCidade = NomeCidade));
-      end if;
+    if not exists(select EmailCli from tbl_cliente where vEmailCli = EmailCli) then
 		insert into tbl_login(IdLogin, TipoAcesso, Login, Senha)
-					value(default, 'Cliente', vNomeCli, vSenha);
-		insert into tbl_cliente(NomeCli, NumEnd, CompleEnd, Cpf, Telefone, CepCli, Login)
-                    values(vNomeCli, vNumEnd, vCompleEnd, vCpf, vTelefone, (select Cep from tbl_endereco where Cep = vCep), (select IdLogin from tbl_login where Login = vNomeCli));
+					value(default, 'Cliente', vEmailCli, vSenha);
+		insert into tbl_cliente(NomeCli, Cpf, Telefone, EmailCli, Login)
+                    values(vNomeCli, vCpf, vTelefone, vEmailCli, (select IdLogin from tbl_login where Login = vEmailCli));
 	else
-	    select "informaçoes já resgistradas";
+	    select "Email já foi utilizado";
+    end if;
+    else 
+		select "Cliente já resgistrado";
     end if;
 end$$
 
-call spInsertCli('Felipe', 'felipe1234', 12345678910, 234567890, 12345050, 456, null, 'Rua da Federal', 'Lapa', 'São Paulo');
+call spInsertCli('Felipe', 'Felipe@gmail.com', 'felipe1234', 12345678910, 234567890);
 call spInsertCli('Alex', 'alex6789', 12345678911, 912341234, 05089001, 466, null, 'Rua Guaipá', 'Vila Lepoldina', 'São Paulo');
+
+-- delete from tbl_cliente where IdCli = 1;
 
 select * from tbl_cliente;
 select * from tbl_login;
@@ -226,6 +220,9 @@ select * from tbl_login;
 create view vwcliente as
 select
 	tbl_cliente.IdCli,
+	tbl_cliente.NomeCli,
+    tbl_cliente.EmailCli,
+    tbl_cliente.Telefone,
     tbl_cliente.Cpf,
     tbl_login.Login,
     tbl_login.Senha
@@ -233,6 +230,22 @@ from tbl_login
 inner join tbl_cliente on (tbl_login.IdLogin = tbl_cliente.Login);
 
 select * from vwcliente;
+
+delimiter $$
+create procedure spSelectLogin(vEmail varchar(250))
+begin
+	select EmailCli from tbl_cliente where EmailCli = vEmail;
+end$$
+
+call spSelectLogin('Felipe@gmail.com');
+
+delimiter $$
+create procedure spSelectCli(vEmail varchar(50))
+begin
+	select * from vwcliente where Login = vEmail;
+end$$
+
+call spSelectCli('Felipe@gmail.com');
 
 delimiter $$
 create procedure spInsertFunci(vNomeFunc varchar(200), vTipoAcesso varchar(50), vSenha varchar(255), vCnpj decimal(14, 0), vTelefone bigint, vCep bigint, vNumEnd int, vCompleEnd varchar(50), vLogradouro varchar(200), vNomeBairro varchar(50), vNomeCidade varchar(50))
@@ -282,7 +295,7 @@ begin
 	declare TipoCart boolean;
 	set @IdCli = (select IdCli from tbl_cliente where NomeCli = vNomeCli);
 	set @DataVali = str_to_date(vDataVali, '%d/%m/%Y');
-        
+
 	if(vTipoCart = 'Credito') then
     set TipoCart = 1;
 	insert into tbl_TipoDePagamento(NumeroCartao, DataValida, TipoCartao, IdTitular)
@@ -320,7 +333,7 @@ begin
     set @TotalProd = (select ValorUnitario from tbl_produto where CodigoBarras = vCodigoBarras) * vQtd;
     set @DataPedido = now();
     set @DataPrazo = date_add(now(), interval 7 day);
-        
+
     if not exists (select NumeroPedido from tbl_pedido where NumeroPedido = vNumPed) then
 		insert into tbl_pedido (NumeroPedido, DataPedido, DataPrazo, TotalPedido, Frete, IdCliPed, Nf, NumPaga) values (vNumPed, @DataPedido, @DataPrazo, @TotalProd, vFrete, @IdCli, null, null);
     end if;
@@ -366,7 +379,7 @@ create procedure spInsertPagamento(vNomeCli varchar(55), vNumeroCartao bigint)
 begin
 	set @IdCli = (select IdCli from tbl_cliente where NomeCli = vNomeCli);
     set @TipoCartao = (select TipoCartao from tbl_tipodepagamento where NumeroCartao = vNumeroCartao);
-    
+
     if(select NumeroPedido from vwPedido where idCli = @IdCli and Nf is null order by idCli desc limit 1) then
 		insert into tbl_pagamento(NumPaga, FormPaga, NumCartao) values (default, @TipoCartao, vNumeroCartao);
 		update tbl_pedido set NumPaga = (select NumPaga from tbl_pagamento order by NumPaga desc limit 1) where IdCliPed = @IdCli and Nf is null;
@@ -404,7 +417,7 @@ begin
 	set @IdCli = (select IdCli from tbl_cliente where NomeCli = vNomeCli);
 	set @TotalNota = (select TotalPedido from vwPagamento where IdCli = @IdCli and Nf is null order by TotalPedido desc limit 1);
     set @DataEmissao = now();
-    
+
     if(select NumPaga from vwPagamento where IdCli = @IdCli and Nf is null order by NumPaga desc limit 1) then
 		insert into tbl_notafiscal (Nf, TotalNota, DataEmissao) values (default, @TotalNota, @DataEmissao);
 		update tbl_pedido set Nf = (select Nf from tbl_NotaFiscal order by Nf desc limit 1) where IdCliPed = @IdCli and Nf is null;
