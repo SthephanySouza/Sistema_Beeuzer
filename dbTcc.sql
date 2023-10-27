@@ -34,19 +34,9 @@ Senha varchar(100) not null
 create table tbl_cliente(
 IdCli int auto_increment primary key,
 NomeCli varchar(255) not null,
-Cpf varchar(12) not null,
+Cpf varchar(11) not null,
 Telefone varchar(9) not null,
 EmailCli varchar(250) not null,
-Login bigint,
-foreign key (Login) references tbl_login (IdLogin)
-);
-
-create table tbl_funcionario(
-IdFunc int auto_increment primary key,
-NomeFunc varchar(255) not null,
-Cpf varchar(11) not null,
-Telefone bigint not null,
-EmailFunc varchar(250) not null,
 Login bigint,
 foreign key (Login) references tbl_login (IdLogin)
 );
@@ -58,6 +48,44 @@ Cor varchar(55) not null,
 Tamanho char(2) not null,
 ValorUnitario decimal(8, 2) not null,
 Qtd int not null
+);
+
+create table tbl_cor(
+IdCor bigint auto_increment primary key,
+Cor varchar(150)
+);
+
+create table tbl_tamanho(
+IdTamanho bigint auto_increment primary key,
+Tamanho varchar(150)
+);
+
+create table tbl_carrinho(
+IdCar bigint primary key,
+TotalCar decimal(7, 2) not null,
+IdCli int,
+foreign key (IdCli) references tbl_cliente (IdCli)
+);
+
+create table tbl_itemCarrinho(
+ValorItem decimal(7, 2) not null,
+Qtd bigint not null,
+TotalProd decimal(7, 2) not null,
+primary key(IdCar, CodigoBarras),
+CodigoBarras bigint, 
+foreign key (CodigoBarras) references tbl_produto (CodigoBarras),
+IdCar bigint, 
+foreign key (IdCar) references  tbl_carrinho (IdCar)
+);
+
+create table tbl_funcionario(
+IdFunc int auto_increment primary key,
+NomeFunc varchar(255) not null,
+Cpf varchar(11) not null,
+Telefone bigint not null,
+EmailFunc varchar(250) not null,
+Login bigint,
+foreign key (Login) references tbl_login (IdLogin)
 );
 
 create table tbl_TipoDePagamento(
@@ -141,17 +169,31 @@ select * from tbl_Uf;
 delimiter $$
 create procedure spInserProd(vCodigoBarras bigint, vNomeProd varchar(200), VCor varchar(55), vTamanho char(2), vValorUnitario decimal(8, 2), vQtd int)
 begin
-	insert into tbl_produto (CodigoBarras, NomeProd , Cor, Tamanho, ValorUnitario, Qtd) values (vCodigoBarras, vNomeProd, vCor, vTamanho, vValorUnitario, vQtd);
+	if not exists(select CodigoBarras from tbl_produto where CodigoBarras = vCodigoBarras) then
+		if not exists(select IdCor from tbl_cor where Cor = vCor) then
+			insert into tbl_cor(Cor) values (vCor);
+		end if;
+		if not exists(select IdTamanho from tbl_tamanho where Tamanho = vTamanho) then
+			insert into tbl_tamanho(Tamanho) values (vTamanho);
+		end if;
+        insert into tbl_produto (CodigoBarras, NomeProd , Cor, Tamanho, ValorUnitario, Qtd) values (vCodigoBarras, vNomeProd, vCor, vTamanho, vValorUnitario, vQtd);
+        else
+			select('Produto já resgistrado!')
+		end;
+    end if;
 end $$
 
-call spInserProd (12345678910111, "Caixa camisa", "Vermelho", "G", 54.61, 120);
-call spInserProd (12345678910114, "Caixa camisa", "Azul", "P", 54.61, 120);
-call spInserProd (12345678910112, "Caixa calça", "Azul", "P", 100.61, 100);
-call spInserProd (12345678910113, "Caixa doação", "Amarelo", "GG", 84.61, 50);
+call spInserProd (12345678910111, "Caixa camisa", "Colorida", "G", 54.61, 120);
+call spInserProd (12345678910112, "Caixa calça", "Neutra", "P", 100.61, 100);
+call spInserProd (12345678910113, "Caixa doação", "Mista", "GG", 84.61, 50);
+call spInserProd (12345678910114, "Caixa calça", "Colorida", "M", 100.61, 100);
+call spInserProd (12345678910115, "Caixa doação", "Neutra", "G", 84.61, 2);
 
 select * from tbl_produto;
+select * from tbl_cor;
+select * from tbl_tamanho;
 
-delimiter $$
+/*delimiter $$
 create procedure spInsertEnde(vCep int, vLogradouro varchar(200), vNomeBairro varchar(50), vNomeCidade varchar(50))
 begin
 	if not exists(select Cep from tbl_endereco where vCep = Cep) then
@@ -175,7 +217,7 @@ call spInsertEnde(12345053, 'Av Paulista', 'Penha', 'Rio de Janeiro');
 call spInsertEnde(12345054, 'Rua Ximbú', 'Penha', 'Rio de Janeiro');
 call spInsertEnde(12345055, 'Rua Piu XI', 'Penha', 'Campinas');
 call spInsertEnde(12345056, 'Rua Chocolate', 'Aclimação', 'Barra Mansa');
-call spInsertEnde(12345057, 'Rua Pão na Chapa', 'Barra Funda', 'Ponta Grossa'); 
+call spInsertEnde(12345057, 'Rua Pão na Chapa', 'Barra Funda', 'Ponta Grossa');*/ 
 
 select * from tbl_endereco;
 
@@ -189,11 +231,11 @@ from tbl_endereco inner join tbl_Cidade
     on (tbl_endereco.idcidade = tbl_cidade.idcidade)
     inner join tbl_Bairro
     on (tbl_endereco.Idbairro = tbl_Bairro.IdBairro);
-
+    
 select * from vwEndereco;
 
 delimiter $$
-create procedure spInsertCli(vNomeCLi varchar(200), vEmailCli varchar(250), vSenha varchar(100), vCpf varchar(12), vTelefone varchar(9))
+create procedure spInsertCli(vNomeCLi varchar(200), vEmailCli varchar(250), vSenha varchar(100), vCpf varchar(11), vTelefone varchar(9))
 begin
 	if not exists(select Cpf from tbl_cliente where vCpf = Cpf) then
     if not exists(select EmailCli from tbl_cliente where vEmailCli = EmailCli) then
@@ -247,7 +289,7 @@ end$$
 
 call spSelectCli('Felipe@gmail.com');
 
-delimiter $$
+/* delimiter $$
 create procedure spInsertFunci(vNomeFunc varchar(200), vTipoAcesso varchar(50), vSenha varchar(255), vCnpj decimal(14, 0), vTelefone bigint, vCep bigint, vNumEnd int, vCompleEnd varchar(50), vLogradouro varchar(200), vNomeBairro varchar(50), vNomeCidade varchar(50))
 begin
 	if not exists(select Cnpj from tbl_funcionario where vCnpj = Cnpj) then
@@ -269,15 +311,15 @@ begin
 	else
 	    select "informaçoes já resgistradas";
     end if;
-end$$
+end$$ */
 
-call spInsertFunci('Lipe', 'Administrador', 'lipe2345', 12345678910, 234567890, 12345050, 456, null, 'Rua da Federal', 'Lapa', 'São Paulo');
-call spInsertFunci('Diego', 'Administrador','diego5678', 12345678911, 912341234, 05089001, 466, null, 'Rua Guaipá', 'Vila Lepoldina', 'São Paulo');
+/* call spInsertFunci('Lipe', 'Administrador', 'lipe2345', 12345678910, 234567890, 12345050, 456, null, 'Rua da Federal', 'Lapa', 'São Paulo');
+call spInsertFunci('Diego', 'Administrador','diego5678', 12345678911, 912341234, 05089001, 466, null, 'Rua Guaipá', 'Vila Lepoldina', 'São Paulo'); */
 
 select * from tbl_funcionario;
 select * from tbl_login;
 
-create view vwfuncionario as
+create drop view vwfuncionario as
 select
 	tbl_funcionario.IdFunc,
     tbl_funcionario.Cnpj,
@@ -295,7 +337,7 @@ begin
 	declare TipoCart boolean;
 	set @IdCli = (select IdCli from tbl_cliente where NomeCli = vNomeCli);
 	set @DataVali = str_to_date(vDataVali, '%d/%m/%Y');
-
+        
 	if(vTipoCart = 'Credito') then
     set TipoCart = 1;
 	insert into tbl_TipoDePagamento(NumeroCartao, DataValida, TipoCartao, IdTitular)
@@ -322,6 +364,12 @@ on (tbl_tipodepagamento.IdTitular = tbl_cliente.IdCli);
 select * from vwCartao;
 
 delimiter $$
+create procedure spInsertCarrinho(vNumPed int, vCliente varchar(200), vCodigoBarras bigint, vQtd bigint)
+begin
+	
+end$$ 
+
+delimiter $$
 create procedure spInsertPedido(vNumPed int, vCliente varchar(200), vCodigoBarras bigint, vQtd bigint)
 begin
 	declare vFrete decimal (5, 2);
@@ -333,7 +381,7 @@ begin
     set @TotalProd = (select ValorUnitario from tbl_produto where CodigoBarras = vCodigoBarras) * vQtd;
     set @DataPedido = now();
     set @DataPrazo = date_add(now(), interval 7 day);
-
+        
     if not exists (select NumeroPedido from tbl_pedido where NumeroPedido = vNumPed) then
 		insert into tbl_pedido (NumeroPedido, DataPedido, DataPrazo, TotalPedido, Frete, IdCliPed, Nf, NumPaga) values (vNumPed, @DataPedido, @DataPrazo, @TotalProd, vFrete, @IdCli, null, null);
     end if;
@@ -374,12 +422,12 @@ inner join tbl_pedido on tbl_cliente.IdCli = tbl_pedido.IdCliPed;
 
 select * from vwPedido;
 
-delimiter $$
+/* delimiter $$
 create procedure spInsertPagamento(vNomeCli varchar(55), vNumeroCartao bigint)
 begin
 	set @IdCli = (select IdCli from tbl_cliente where NomeCli = vNomeCli);
     set @TipoCartao = (select TipoCartao from tbl_tipodepagamento where NumeroCartao = vNumeroCartao);
-
+    
     if(select NumeroPedido from vwPedido where idCli = @IdCli and Nf is null order by idCli desc limit 1) then
 		insert into tbl_pagamento(NumPaga, FormPaga, NumCartao) values (default, @TipoCartao, vNumeroCartao);
 		update tbl_pedido set NumPaga = (select NumPaga from tbl_pagamento order by NumPaga desc limit 1) where IdCliPed = @IdCli and Nf is null;
@@ -417,7 +465,7 @@ begin
 	set @IdCli = (select IdCli from tbl_cliente where NomeCli = vNomeCli);
 	set @TotalNota = (select TotalPedido from vwPagamento where IdCli = @IdCli and Nf is null order by TotalPedido desc limit 1);
     set @DataEmissao = now();
-
+    
     if(select NumPaga from vwPagamento where IdCli = @IdCli and Nf is null order by NumPaga desc limit 1) then
 		insert into tbl_notafiscal (Nf, TotalNota, DataEmissao) values (default, @TotalNota, @DataEmissao);
 		update tbl_pedido set Nf = (select Nf from tbl_NotaFiscal order by Nf desc limit 1) where IdCliPed = @IdCli and Nf is null;
@@ -445,4 +493,4 @@ inner join tbl_pagamento on tbl_pedido.NumPaga = tbl_pagamento.NumPaga
 inner join tbl_tipodepagamento on tbl_pagamento.NumCartao = tbl_tipodepagamento.NumeroCartao
 inner join tbl_cliente on tbl_tipodepagamento.IdTitular = tbl_cliente.IdCli;
 
-select * from vwNotaFiscal;
+select * from vwNotaFiscal; */
