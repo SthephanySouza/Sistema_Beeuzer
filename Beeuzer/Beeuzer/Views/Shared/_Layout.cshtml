@@ -20,7 +20,7 @@
                 <ul class="navbar-nav navbar-right">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Caixas", "Caixa", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    @*<li>@Html.ActionLink("Carrinho", "Carrinho", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
+                    <li>@Html.ActionLink("Carrinho", "Carrinho", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
 
                 <ul class="navbar-nav navbar-right">
@@ -28,11 +28,16 @@
                     {
                         <li><img class="icon_user" src="~/img/icon_user.png" /></li>
                         <li>@Html.ActionLink(@User.Identity.Name, " ", " ", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
+
+                        <button>
+                            <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
+                        </button>
                     }
                     else
                     {
-                        @Html.ActionLink("Entrar", "Login", "Autenticacao", new { area = "" }, new { @class = "nav-link" })
+                        <button>
+                            @Html.ActionLink("Entrar", "Login", "Autenticacao", new { area = "" }, new { @class = "nav-link" })
+                        </button>
                     }
                 </ul>
             </div>

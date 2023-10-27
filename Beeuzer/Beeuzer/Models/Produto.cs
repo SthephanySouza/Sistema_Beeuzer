@@ -8,7 +8,7 @@ namespace Beeuzer.Models
 {
     public class Produto
     {
-        public int CodigoBarras {  get; set; }
+        public int? CodigoBarras {  get; set; }
 
         [Required]
         public string NomeProd {  get; set; }
@@ -24,7 +24,5 @@ namespace Beeuzer.Models
 
         [Required]
         public int Qtd {  get; set; }
-
-
     }
 }
