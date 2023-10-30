@@ -17,7 +17,7 @@ namespace Beeuzer.Controllers
             return View();
         }
 
-        public ActionResult Carrinho(Produto viewModel)
+        public ActionResult Carrinho(Carrinho viewModel)
         {
             if (Session[@User.Identity.Name] != null)
             {
@@ -27,12 +27,20 @@ namespace Beeuzer.Controllers
                 }
             }
 
-            if (string.IsNullOrEmpty(Request.QueryString[viewModel.CodigoBarras].ToString()))
+            if (!string.IsNullOrEmpty(Request.QueryString[viewModel.CodigoBarras].ToString()))
             {
-
+                Carrinho novoCar = new Carrinho
+                {
+                    NomeProd = viewModel.NomeProd,
+                    Qtd = viewModel.Qtd,
+                    ValorUnitario = viewModel.ValorUnitario,
+                    TotalProd = viewModel.TotalProd,
+                    TotalCar = viewModel.TotalCar
+                };
+                novoCar.InsertCad(novoCar);
             }
 
-                return View();
+            return View();
         }
 
 

@@ -223,7 +223,6 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="img\icon_user.png" />
-    <Content Include="php\Carrinho.php" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -282,10 +281,10 @@
     <Content Include="Views\Home\Caixa_Calsa.cshtml" />
     <Content Include="Views\Home\Caixa_Doacao.cshtml" />
     <Content Include="Views\Home\Caixa_Camisa.cshtml" />
-    <Content Include="Views\Carrinho\Carrinho.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Carrinho\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

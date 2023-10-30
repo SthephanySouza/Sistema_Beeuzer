@@ -178,3 +178,8 @@ call spSelectCli('Felipe@gmail.com');
 
 /* truncate tbl_cadastro;
 truncate tbl_login; */
+
+/* select carrinho e itemcarrinho
+insert nas mesmas
+puxar produtos comprados
+identificas cliente */

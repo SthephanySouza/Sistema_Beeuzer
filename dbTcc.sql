@@ -41,30 +41,32 @@ Login bigint,
 foreign key (Login) references tbl_login (IdLogin)
 );
 
-create table tbl_produto(
-CodigoBarras bigint primary key,
-NomeProd varchar(200) not null,
-Cor varchar(55) not null,
-Tamanho char(2) not null,
-ValorUnitario decimal(8, 2) not null,
-Qtd int not null
-);
-
 create table tbl_cor(
 IdCor bigint auto_increment primary key,
-Cor varchar(150)
+Cor varchar(55)
 );
 
 create table tbl_tamanho(
 IdTamanho bigint auto_increment primary key,
-Tamanho varchar(150)
+Tamanho varchar(2)
+);
+
+create table tbl_produto(
+CodigoBarras bigint primary key,
+NomeProd varchar(200) not null,
+ValorUnitario decimal(8, 2) not null,
+Qtd int not null,
+Cor bigint,
+foreign key (Cor) references tbl_cor (IdCor),
+Tamanho bigint,
+foreign key (Tamanho) references tbl_tamanho (IdTamanho)
 );
 
 create table tbl_carrinho(
-IdCar bigint primary key,
+IdCar bigint auto_increment primary key,
 TotalCar decimal(7, 2) not null,
-IdCli int,
-foreign key (IdCli) references tbl_cliente (IdCli)
+NomeCli int,
+foreign key (NomeCli) references tbl_cliente (IdCli)
 );
 
 create table tbl_itemCarrinho(
@@ -176,7 +178,8 @@ begin
 		if not exists(select IdTamanho from tbl_tamanho where Tamanho = vTamanho) then
 			insert into tbl_tamanho(Tamanho) values (vTamanho);
 		end if;
-        insert into tbl_produto (CodigoBarras, NomeProd , Cor, Tamanho, ValorUnitario, Qtd) values (vCodigoBarras, vNomeProd, vCor, vTamanho, vValorUnitario, vQtd);
+        insert into tbl_produto (CodigoBarras, NomeProd , Cor, Tamanho, ValorUnitario, Qtd) values 
+					(vCodigoBarras, vNomeProd, (select IdCor from tbl_cor where Cor = vCor), (select IdTamanho from tbl_tamanho where Tamanho = vTamanho), vValorUnitario, vQtd);
         else
 			select('Produto já resgistrado!')
 		end;
@@ -364,9 +367,19 @@ on (tbl_tipodepagamento.IdTitular = tbl_cliente.IdCli);
 select * from vwCartao;
 
 delimiter $$
-create procedure spInsertCarrinho(vNumPed int, vCliente varchar(200), vCodigoBarras bigint, vQtd bigint)
+create procedure spInsertCarrinho(vEmail varchar(200), vNomeProd varchar(50), vQtd bigint, vValorUnitario decimal(7,2))
 begin
-	
+	set @TotalCar = vValorUnitario  * vQtd;
+    set @NomeCli = (select NomeCli from tbl_cliente where EmailCli = vEmail);
+        
+	if not exists (select IdCar from tbl_carrinho order by IdCar desc limit 1) then
+		insert into tbl_carrinho (IdCar, TotalCar, NomeCli) values (default, @TotalCar, @NomeCli);
+    end if;
+    if not exists (select CodigoBarras from tbl_itempedido where CodigoBarras = vCodigoBarras and NumeroPedido = vNumPed) then
+		insert into tbl_itempedido (ValorItem, Qtd, TotalProd, CodigoBarras, NumeroPedido) values (@ValorItem, vQtd, @TotalProd, @CodBarras, (select NumeroPedido from tbl_pedido order by NumeroPedido desc limit 1));
+        update tbl_pedido set TotalPedido = (select sum(TotalProd) from tbl_itempedido where NumeroPedido = vNumPed) + Frete where NumeroPedido = vNumPed;
+		update tbl_produto set Qtd = Qtd - vQtd where CodigoBarras = vCodigoBarras;
+	end if;
 end$$ 
 
 delimiter $$
