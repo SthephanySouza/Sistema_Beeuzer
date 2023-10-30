@@ -21,3 +21,4 @@ function Diminuir() {
         console.log($result);
     }
 }
+

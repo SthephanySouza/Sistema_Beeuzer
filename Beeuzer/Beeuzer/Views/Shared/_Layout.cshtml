@@ -28,16 +28,11 @@
                     {
                         <li><img class="icon_user" src="~/img/icon_user.png" /></li>
                         <li>@Html.ActionLink(@User.Identity.Name, " ", " ", new { area = "" }, new { @class = "nav-link" })</li>
-
-                        <button>
-                            <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
-                        </button>
+                        <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else
                     {
-                        <button>
-                            @Html.ActionLink("Entrar", "Login", "Autenticacao", new { area = "" }, new { @class = "nav-link" })
-                        </button>
+                        @Html.ActionLink("Entrar", "Login", "Autenticacao", new { area = "" }, new { @class = "nav-link" })
                     }
                 </ul>
             </div>

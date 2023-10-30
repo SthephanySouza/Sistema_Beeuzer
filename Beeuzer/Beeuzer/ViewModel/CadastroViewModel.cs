@@ -23,6 +23,7 @@ namespace Beeuzer.ViewModel
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Informe seu telefone")]
+        [DataType(DataType.PhoneNumber)]
         public string Telefone { get; set; }
 
         [Display(Name = "CPF")]
