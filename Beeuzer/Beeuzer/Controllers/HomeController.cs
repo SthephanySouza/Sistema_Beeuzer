@@ -34,23 +34,5 @@ namespace Beeuzer.Controllers
         {
             return View();
         }
-
-
-        public ActionResult Carrinho()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Entrar()
-        {
-            return View();
-        }
-
-        public ActionResult Cadastrar()
-        {
-            return View();
-        }
     }
 }

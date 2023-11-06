@@ -595,3 +595,7 @@ C:\Users\3ds\Downloads\Sistema_Beeuzer-main\Beeuzer\Beeuzer\obj\Debug\Beeuzer.cs
 C:\Users\3ds\Downloads\Sistema_Beeuzer-main\Beeuzer\Beeuzer\obj\Debug\Beeuzer.csproj.CopyComplete
 C:\Users\3ds\Downloads\Sistema_Beeuzer-main\Beeuzer\Beeuzer\obj\Debug\Beeuzer.dll
 C:\Users\3ds\Downloads\Sistema_Beeuzer-main\Beeuzer\Beeuzer\obj\Debug\Beeuzer.pdb
+C:\Users\STHEPHANY\Documents\BG\3DS\TCC\Sistema\Beeuzer\Beeuzer\bin\EntityFramework.dll
+C:\Users\STHEPHANY\Documents\BG\3DS\TCC\Sistema\Beeuzer\Beeuzer\bin\EntityFramework.xml
+C:\Users\STHEPHANY\Documents\BG\3DS\TCC\Sistema\Beeuzer\Beeuzer\bin\EntityFramework.SqlServer.dll
+C:\Users\STHEPHANY\Documents\BG\3DS\TCC\Sistema\Beeuzer\Beeuzer\bin\EntityFramework.SqlServer.xml

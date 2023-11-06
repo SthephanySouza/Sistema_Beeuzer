@@ -1,0 +1,54 @@
+﻿@model Beeuzer.ViewModel.CarrinhoViewModel
+
+@{
+    ViewBag.Title = "Seu carrinho";
+}
+
+<h2>Seu carrinho</h2>
+<table id="cartTable" class="table">
+    <thead>
+        <tr>
+            <th>Quantidade</th>
+            <th>Produto</th>
+            <th class="text-right">Preço</th>
+            <th class="text-right">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Carrinho.ItensCarrinho)
+        {
+            <tr>
+                <td class="text-center">@item.Qtd</td>
+                <td class="text-left">@item.Produto.NomeProd</td>
+                <td class="text-right">
+                    @item.Produto.ValorUnitario.ToString("c")
+                </td>
+                <td class="text-right">
+                    @((item.Qtd * item.Produto.ValorUnitario).ToString("c"))
+                </td>
+                <td>
+                    @using (Html.BeginForm("Remover", "Carrinho"))
+                    {
+                        @Html.Hidden("ProdutoId", item.Produto.CodigoBarras)
+                        @Html.HiddenFor(x => x.ReturnUrl)
+                        <input class="btn btn-sm btn-warning" type="submit" value="Remover" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3" class="text-right">Total:</td>
+            <td class="text-right">
+                @Model.Carrinho.ValorTotal().ToString("c")
+            </td>
+        </tr>
+    </tfoot>
+</table>
+<div class="text-center">
+    <a class="btn btn-primary" href="~/Home/Caixa.cshtml">
+        Continuar comprando
+    </a>
+    @Html.ActionLink("Fechar o pedido", "FecharPedido", "Carrinho", new { @class = "btn btn-primary" })
+</div>
