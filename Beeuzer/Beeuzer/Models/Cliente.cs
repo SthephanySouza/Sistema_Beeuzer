@@ -14,7 +14,7 @@ namespace Beeuzer.Models
         MySqlConnection Conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
         MySqlCommand comand = new MySqlCommand();
 
-        public int IdCad { get; set; }
+        public int IdCli { get; set; }
 
         [Required]
         [MaxLength(200)]
@@ -75,7 +75,7 @@ namespace Beeuzer.Models
 
             if (readCliente.Read())
             {
-                TempCliente.IdCad = int.Parse(readCliente["IdCli"].ToString());
+                TempCliente.IdCli = int.Parse(readCliente["IdCli"].ToString());
                 TempCliente.Nome = readCliente["NomeCli"].ToString();
                 TempCliente.Cpf = readCliente["Cpf"].ToString();
                 TempCliente.Email = readCliente["EmailCli"].ToString();

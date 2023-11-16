@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Beeuzer.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -17,21 +18,6 @@ namespace Beeuzer.Controllers
         {
             ViewBag.Message = "Your application description page.";
 
-            return View();
-        }
-
-        public ActionResult Caixa_Camisa()
-        {
-            return View();
-        }
-
-        public ActionResult Caixa_Calsa()
-        {
-            return View();
-        }
-
-        public ActionResult Caixa_Doacao()
-        {
             return View();
         }
     }
