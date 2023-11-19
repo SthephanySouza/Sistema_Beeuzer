@@ -8,7 +8,7 @@
 <h2>Produtos</h2>
 
 <p>
-    @Html.ActionLink("Cadastra Produto", "Create")
+    @Html.ActionLink("Cadastra Produto", "CadastrarProd")
 </p>
 <table class="table">
     <tr>
@@ -54,7 +54,7 @@
             @Html.DisplayFor(modelItem => item.Qtd)
         </td>
         <td>
-            @Html.ActionLink("Editar", "Edit", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Atualizar", "AtualizarProd", new { id=item.CodigoBarras })
         </td>
     </tr>
 }

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Beeuzer.Models.Pedido>
+
+@{
+    ViewBag.Title = "SelectPed";
+    Layout = "~/Areas/Funcionario/Views/Shared/_LayoutAdm.cshtml";
+}
+
+<h2>Pedidos</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NumeroPedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomeCli)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPedido)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataPrazo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TotalPedido)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumeroPedido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomeCli)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPedido)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataPrazo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TotalPedido)
+        </td>
+    </tr>
+}
+
+</table>

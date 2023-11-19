@@ -18,13 +18,14 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav navbar-right">
                     <li>@Html.ActionLink("Home", "Index", "Funcionario", new { area = "Funcionario" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Consultar Produtos", "SelectProd", "Funcionario", new { area = "Funcionario" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Produtos", "SelectProd", "Funcionario", new { area = "Funcionario" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Pedidos", "SelectPed", "Funcionario", new { area = "Funcionario" }, new { @class = "nav-link" })</li>
                 </ul>
 
                 <ul class="navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink(@User.Identity.Name, " ", " ", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Administrador", " ", " ", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Sair", "Logout", "Autenticacao", new { area = "" }, new { @class = "nav-link" })</li>
                     }
                     else
