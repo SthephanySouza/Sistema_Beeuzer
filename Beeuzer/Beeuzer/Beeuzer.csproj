@@ -185,6 +185,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Areas\Funcionario\Controllers\FuncionarioController.cs" />
+    <Compile Include="Areas\Funcionario\FuncionarioAreaRegistration.cs" />
     <Compile Include="Controllers\AutenticacaoController.cs" />
     <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -252,6 +254,10 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Areas\Funcionario\Views\web.config" />
+    <Content Include="Areas\Funcionario\Views\Shared\_LayoutAdm.cshtml" />
+    <Content Include="Areas\Funcionario\Views\Funcionario\Index.cshtml" />
+    <Content Include="Areas\Funcionario\Views\Funcionario\SelectProd.cshtml" />
     <None Include="Scripts\jquery-3.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
@@ -286,6 +292,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Funcionario\Data\" />
+    <Folder Include="Views\Funcionario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

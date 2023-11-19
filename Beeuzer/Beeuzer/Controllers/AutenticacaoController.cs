@@ -132,6 +132,9 @@ namespace Beeuzer.Controllers
 
             if (!String.IsNullOrWhiteSpace(viewmodel.UrlRetorno) || Url.IsLocalUrl(viewmodel.UrlRetorno))
                 return Redirect(viewmodel.UrlRetorno);
+            else if (cadastro.Email == "felipe@gmail.com")
+                return RedirectToAction("Index", "Funcionario", new { area = "Funcionario" });
+
             else
                 return RedirectToAction("Index", "Home");
         }

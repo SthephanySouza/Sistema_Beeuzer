@@ -8,7 +8,7 @@ namespace Beeuzer.ViewModel
 {
     public class ProdutoViewModel
     {
-        public int CodigoBarras { get; set; }
+        public Int64 CodigoBarras { get; set; }
 
         public string NomeProd { get; set; }
 
