@@ -1,0 +1,90 @@
+﻿@model Beeuzer.Models.Produto
+
+@{
+    ViewBag.Title = "Caixa_Calsa";
+}
+
+<h2>Caixa_Calsa</h2>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+                <h1 class="display-5 fw-bolder">@Html.DisplayTextFor(model => model.NomeProd)</h1>
+                <div class="fs-5 mb-5">
+                    <span>R$ @Html.DisplayTextFor(model => model.ValorUnitario)</span>
+                </div>
+                <p class="lead">
+                    @Html.DropDownListFor(model => model.Tamanho,
+                        new List<SelectListItem> {
+                            new SelectListItem { Value = "0" , Text = "" },
+                            new SelectListItem { Value = "1" , Text = "PP" },
+                            new SelectListItem { Value = "2" , Text = "P" },
+                            new SelectListItem { Value = "3" , Text = "M" },
+                            new SelectListItem { Value = "4" , Text = "G" },
+                            new SelectListItem { Value = "5" , Text = "GG" }
+                        },
+                        new { @class = "Produto" })
+                            </p>
+                <p class="lead">
+                    @Html.DropDownListFor(model => model.Cor,
+                        new List<SelectListItem> {
+                            new SelectListItem { Value = "0" , Text = "" },
+                            new SelectListItem { Value = "1" , Text = "Colorida" },
+                            new SelectListItem { Value = "2" , Text = "Neutra" },
+                            new SelectListItem { Value = "2" , Text = "Mista" }
+                        },
+                        new { @class = "Produto" })
+                            </p>
+                <p class="lead">
+                    <button type="button" onclick="Diminuir()" id="min">-</button>
+                    @{
+                        int Qtd = 1;
+                    }
+
+                    @Html.EditorFor(Model => Qtd, new { htmlAttributes = new { @id = "valor" } })
+                    <button type="button" onclick="Aumentar()" id="max">+</button>
+                </p>
+                <div class="d-flex">
+                    <a href="@Url.Action("Caixa", "Home")" class="btn btn-danger w-50 text-center me-3">
+                        <i class="fas fa-undo-alt"></i> Voltar
+                    </a>
+                    <button class="btn btn-success btn-agregar-carrito flex-shrink-0 w-50 " type="button" data-idProdu="@Html.DisplayTextFor(model => model.CodigoBarras)">
+                        <i class="fas fa-cart-plus"></i> Adicionar no carrinho
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*@{List<string> teste = Beeuzer.Models.Produto.GetCities();}*@
+@*<div>
+        <c1-combo-box selected-index=0 case-sensitive-search="true" is-editable="true">
+            <c1-items-source source-collection="@teste"></c1-items-source>
+        </c1-combo-b
+    </div>*@
+
+@* <div class="k-d-flex k-justify-content-center" style="padding-top: 54px;">
+        <div class="k-w-300">
+            @(Html.Produto().ComboBox()
+                .Name("products")
+                .Placeholder("Select product")
+                .DataTextField("NomeProd")
+                .DataValueField("CodigoBarras")
+                .Label(label => {
+                    label.Content("Find a product...");
+                    label.Floating(true);
+                })
+                .HtmlAttributes(new { style = "width:100%;" })
+                .Filter(FilterType.Contains)
+                .DataSource(source =>
+                {
+                    source.Read(read =>
+                    {
+                        read.Action("FloatingLabel_GetProducts", "ComboBox");
+                    });
+                })
+            )
+        </div>
+    </div> *@

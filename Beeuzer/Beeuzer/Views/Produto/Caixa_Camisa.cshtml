@@ -1,0 +1,46 @@
+﻿@model Beeuzer.ViewModel.ProdutoViewModel
+
+@{
+    ViewBag.Title = "Caixa_Camisa";
+}
+
+<h2>Caixa_Camisa</h2>
+
+<form>
+    @Html.DropDownListFor(model => model.Tamanho,
+                          new List<SelectListItem> {
+                       new SelectListItem { Value = "0" , Text = "" },
+                       new SelectListItem { Value = "1" , Text = "PP" },
+                       new SelectListItem { Value = "2" , Text = "P" },
+                       new SelectListItem { Value = "3" , Text = "M" },
+                       new SelectListItem { Value = "4" , Text = "G" },
+                       new SelectListItem { Value = "5" , Text = "GG" }
+                                            },
+                          new { @class = "Produto" })
+
+    @Html.DropDownListFor(model => model.Cor,
+                      new List<SelectListItem> {
+                   new SelectListItem { Value = "0" , Text = "" },
+                   new SelectListItem { Value = "1" , Text = "Colorida" },
+                   new SelectListItem { Value = "2" , Text = "Neutra" },
+                   new SelectListItem { Value = "2" , Text = "Mista" }
+                                        },
+                      new { @class = "Produto" })
+    <br><br>
+        <div class="quantity">
+            <button type="button" onclick="Diminuir()" id="min">-</button>
+                @{ 
+                    int Qtd = 1;
+                }
+
+                @Html.EditorFor(Model => Qtd, new { htmlAttributes = new { @id = "valor" } })
+            <button type="button" onclick="Aumentar()" id="max">+</button>
+        </div>
+    <br><br>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Comprar" class="btn btn-default" />
+            <input type="submit" value="Carrinho" class="btn btn-default" />
+        </div>
+    </div>
+</form>
