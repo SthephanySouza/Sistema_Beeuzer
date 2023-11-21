@@ -1,37 +1,121 @@
-﻿using Beeuzer.Repository;
-using Beeuzer.Models;
+﻿using Beeuzer.Models;
 using Beeuzer.ViewModel;
 using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace Beeuzer.Controllers
 {
     public class CarrinhoController : Controller
     {
-        private ProdutoRepo produtoRepo;
+        private static Cliente cliente;
 
-        public RedirectToRouteResult Adicionar(int codigoBarras, string returnUrl)
+        public ActionResult Carrinho()
         {
-            produtoRepo = new ProdutoRepo();
+            return View();
+        }
 
-            Produto produto = produtoRepo.Produtos
-                .FirstOrDefault(p => p.CodigoBarras == codigoBarras);
+        public ActionResult LogicaCarinnho()
+        {
+            if (Session["Cliente"] == null)
+                return RedirectToAction("Login", "Autenticacao");
+            else
+                cliente = (Cliente)Session["Cliente"];
 
-            if (produto != null)
+            return View();
+        }
+
+        [HttpPost]
+        public JsonResult InsertCarrinho(Carrinho carrinho)
+        {
+            carrinho.Cliente = new Cliente() 
+            {
+                IdCli = cliente.IdCli
+            };
+            int respostas = 0;
+
+            respostas = CarrinhoViewModel.Instancia.InsertCar(carrinho);
+
+            return Json(new { resposta = respostas }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult Quantidade()
+        {
+            int respostas = 0;
+            respostas = CarrinhoViewModel.Instancia.Quantidade(cliente.IdCli);
+            return Json(new { resposta = respostas }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpGet]
+        public JsonResult SelectCarrinho()
+        {
+            List<Carrinho> lista = new List<Carrinho>();
+            lista = CarrinhoViewModel.Instancia.SelectCar(cliente.IdCli);
+
+            if (lista.Count != 0)
+            {
+                lista = (from d in lista
+                         select new Carrinho()
+                          {
+                              IdCar = d.IdCar,
+                              Produto = new Produto()
+                              {
+                                  CodigoBarras = d.Produto.CodigoBarras,
+                                  NomeProd = d.Produto.NomeProd,
+                                  Cor = d.Produto.Cor,
+                                  Tamanho = d.Produto.Tamanho,
+                                  ValorUnitario = d.Produto.ValorUnitario
+                              }
+                          }).ToList();
+            }
+
+
+            return Json(new { list = lista }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult DeletCarrinho(string idCar, string codigoBarras)
+        {
+            bool resposta = false;
+            resposta = CarrinhoViewModel.Instancia.DeletCar(idCar, codigoBarras);
+            return Json(new { resultado = resposta }, JsonRequestBehavior.AllowGet);
+        }
+
+        /* public ActionResult Carrinho(string urlRetorno)
+        {
+            return View(new CarrinhoViewModel
+            {
+                Carrinho = ObterCarrinho(),
+                UrlRetorno = urlRetorno
+            });
+        } */
+
+        /* private Produto produto;
+
+        public RedirectToRouteResult Adicionar(int codigoBarras, string urlRetorno)
+        {
+            produto = new Produto();
+
+            Produto produtos = produto.NomeProd.FirstOrDefault(p => p.CodigoBarras == codigoBarras);
+
+            if (produtos != null)
             {
                 ObterCarrinho().AdicionarItem(produto, 1);
             }
 
-            return RedirectToAction("Index", new { returnUrl });
+            return RedirectToAction("Index", new { urlRetorno });
+        } */
 
-        }
-
-        private Carrinho ObterCarrinho()
+        /* private Carrinho ObterCarrinho()
         {
             Carrinho carrinho = (Carrinho)Session["Carrinho"];
 
@@ -40,78 +124,20 @@ namespace Beeuzer.Controllers
                 carrinho = new Carrinho();
                 Session["Carrinho"] = carrinho;
             }
-
             return carrinho;
-        }
-
-        public RedirectToRouteResult Remover(int codigoBarras, string returnUrl)
-        {
-
-            produtoRepo = new ProdutoRepo();
-
-            Produto produto = produtoRepo.Produtos
-                .FirstOrDefault(p => p.CodigoBarras == codigoBarras);
-
-            if (produto != null)
-            {
-                ObterCarrinho().RemoverItem(produto);
-            }
-
-            return RedirectToAction("Index", new { returnUrl });
-        }
-
-        public ViewResult Index(string returnUrl)
-        {
-            return View(new CarrinhoViewModel
-            {
-                Carrinho = ObterCarrinho(),
-                ReturnUrl = returnUrl
-            });
-        }
-
-        public PartialViewResult Resumo()
-        {
-            Carrinho carrinho = ObterCarrinho();
-            return PartialView(carrinho);
-        }
-
-        /* public ViewResult FecharPedido()
-        {
-            return View(new Pedido());
-        }
-
-        [HttpPost]
-        public ViewResult FecharPedido(Pedido pedido)
-        {
-            Carrinho carrinho = ObterCarrinho();
-
-            EmailConfiguracoes email = new EmailConfiguracoes
-            {
-                EscreverArquivo = bool.Parse(ConfigurationManager.AppSettings["Email.EscreverArquivo"] ?? "false")
-            };
-
-            EmailPedido emailPedido = new EmailPedido(email);
-
-            if (!carrinho.ItensCarrinho.Any())
-            {
-                ModelState.AddModelError("", "Não foi possível concluir o pedido, seu carrinho está vazio!");
-            }
-
-            if (ModelState.IsValid)
-            {
-                emailPedido.ProcessarPedido(carrinho, pedido);
-                carrinho.LimparCarrinho();
-                return View("PedidoConcluido");
-            }
-            else
-            {
-                return View(pedido);
-            }
         } */
 
-        public ViewResult PedidoConcluido()
+        /* public RedirectToRouteResult Remover(int codigoBarras, string urlRetorno)
         {
-            return View();
-        }
+            produto = new Produto();
+
+            Produto produtos = produto.NomeProd.FirstOrDefault(p => p.CodigoBarras == codigoBarras);
+
+            if (produtos != null)
+            {
+                ObterCarrinho().RemoverItem(produtos);
+            }
+            return RedirectToAction("Index", new { urlRetorno });
+        } */
     }
 }
