@@ -1,22 +1,22 @@
 ﻿using System.Web.Mvc;
 
-namespace Beeuzer.Areas.Administrador
+namespace Beeuzer.Areas.Funcionario
 {
-    public class AdministradorAreaRegistration : AreaRegistration 
+    public class FuncionarioAreaRegistration : AreaRegistration 
     {
         public override string AreaName 
         {
             get 
             {
-                return "Administrador";
+                return "Funcionario";
             }
         }
 
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(
-                "Administrador_default",
-                "Administrador/{controller}/{action}/{id}",
+                "Funcionario_default",
+                "Funcionario/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
         }

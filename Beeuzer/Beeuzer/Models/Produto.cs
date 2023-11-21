@@ -2,20 +2,22 @@
 using MySqlX.XDevAPI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Windows.Input;
 
 namespace Beeuzer.Models
 {
     public class Produto
     {
-        /* MySqlConnection Conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
-        MySqlCommand comand = new MySqlCommand(); */
+        MySqlConnection Conexao = new MySqlConnection(ConfigurationManager.ConnectionStrings["conexao"].ConnectionString);
+        MySqlCommand comand = new MySqlCommand();
 
-        public int CodigoBarras {  get; set; }
+        public Int64 CodigoBarras {  get; set; }
 
         [Required]
         [MaxLength(250)]
@@ -35,19 +37,59 @@ namespace Beeuzer.Models
         [Required]
         public int Qtd { get; set; }
 
-        /* public void InsertProd(Produto produto)
+        public void InsertProd(Produto produto)
         {
             Conexao.Open();
-            comand.CommandText = "@CodigoBarras, @NomeProd, @Cor, @Tamanho, @ValorUnitario, @Qtd";
-            comand.Parameters.Add("@CodigoBarras", MySqlDbType.VarChar).Value = produto.CodigoBarras;
+            comand.CommandText = "call spInserProd(@CodigoBarras, @NomeProd, @Cor, @Tamanho, @ValorUnitario, @Qtd)";
+            comand.Parameters.Add("@CodigoBarras", MySqlDbType.Int64).Value = produto.CodigoBarras;
             comand.Parameters.Add("@NomeProd", MySqlDbType.VarChar).Value = produto.NomeProd;
             comand.Parameters.Add("@Cor", MySqlDbType.VarChar).Value = produto.Cor;
             comand.Parameters.Add("@Tamanho", MySqlDbType.VarChar).Value = produto.Tamanho;
-            comand.Parameters.Add("@ValorUnitario", MySqlDbType.VarChar).Value = produto.ValorUnitario;
-            comand.Parameters.Add("@Qtd", MySqlDbType.VarChar).Value = produto.Qtd;
+            comand.Parameters.Add("@ValorUnitario", MySqlDbType.Decimal).Value = produto.ValorUnitario;
+            comand.Parameters.Add("@Qtd", MySqlDbType.Int32).Value = produto.Qtd;
             comand.Connection = Conexao;
             comand.ExecuteNonQuery();
             Conexao.Close();
-        } */
+        }
+
+        public void UpdateProd(Produto produto)
+        {
+            Conexao.Open();
+            comand.CommandText = "call spUpdateProd(@CodigoBarras, @NomeProd, @Cor, @Tamanho, @ValorUnitario, @Qtd)";
+            comand.Parameters.Add("@CodigoBarras", MySqlDbType.Int64).Value = produto.CodigoBarras;
+            comand.Parameters.Add("@NomeProd", MySqlDbType.VarChar).Value = produto.NomeProd;
+            comand.Parameters.Add("@Cor", MySqlDbType.VarChar).Value = produto.Cor;
+            comand.Parameters.Add("@Tamanho", MySqlDbType.VarChar).Value = produto.Tamanho;
+            comand.Parameters.Add("@ValorUnitario", MySqlDbType.Decimal).Value = produto.ValorUnitario;
+            comand.Parameters.Add("@Qtd", MySqlDbType.Int32).Value = produto.Qtd;
+            comand.Connection = Conexao;
+            comand.ExecuteNonQuery();
+            Conexao.Close();
+        }
+
+        public Produto SelectProd(Int64 CodBarras)
+        {
+            Conexao.Open();
+            comand.CommandText = "call spSelectProd(@CodBarras)";
+            comand.Parameters.Add("@CodBarras", MySqlDbType.Int64).Value = CodBarras;
+            comand.Connection = Conexao;
+
+            var readProduto = comand.ExecuteReader();
+            var tempProduto  = new Produto();
+
+            if (readProduto.Read())
+            {
+                tempProduto.CodigoBarras = Convert.ToInt64(readProduto["CodigoBarras"]);
+                tempProduto.NomeProd = readProduto["NomeProd"].ToString();
+                tempProduto.Cor = readProduto["Cor"].ToString();
+                tempProduto.Tamanho = readProduto["Tamanho"].ToString();
+                tempProduto.ValorUnitario = Convert.ToDecimal(readProduto["ValorUnitario"]);
+                tempProduto.Qtd = Convert.ToInt16(readProduto["Qtd"]);
+            }
+            readProduto.Close();
+            Conexao.Close();
+
+            return tempProduto;
+        }
     }
 }

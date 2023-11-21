@@ -1,11 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\Beeuzer",
-    "\\Beeuzer\\Beeuzer",
-    "\\Beeuzer\\Beeuzer\\Models",
-    "\\Beeuzer\\Beeuzer\\ViewModel"
+    ""
   ],
-  "SelectedNode": "\\Beeuzer\\Beeuzer\\ViewModel\\CadastroViewModel.cs",
+  "SelectedNode": "\\Beeuzer.sln",
   "PreviewInSolutionExplorer": false
 }
