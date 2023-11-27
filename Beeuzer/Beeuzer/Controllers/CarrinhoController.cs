@@ -16,17 +16,24 @@ namespace Beeuzer.Controllers
     {
         private static Cliente cliente;
 
+        [HttpGet]
         public ActionResult Carrinho()
         {
             return View();
         }
 
-        public ActionResult LogicaCarinnho()
+        [HttpPost]
+        public ActionResult Carrinho(FormCollection carrinho)
         {
-            if (Session["Cliente"] == null)
-                return RedirectToAction("Login", "Autenticacao");
-            else
-                cliente = (Cliente)Session["Cliente"];
+            Produto produto = new Produto();
+            string Cor = carrinho["Cor"];
+            string Tamanho = carrinho["Tamanho"];
+            int Qtd = Convert.ToInt32(carrinho["Qtd"]);
+            string Nome = carrinho["Caixa"];
+
+            Int64 Cod = produto.SelectCod(Nome, Cor, Tamanho);
+
+            ViewBag.CodBarras = Cod;
 
             return View();
         }

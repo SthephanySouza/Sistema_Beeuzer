@@ -6,6 +6,7 @@
 
 <h2>Caixa_Calsa</h2>
 
+<form name="frmcarrinho" method="post" action="@Url.Action("Carrinho", "Carrinho")">
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
@@ -18,21 +19,21 @@
                     @Html.DropDownListFor(model => model.Tamanho,
                         new List<SelectListItem> {
                             new SelectListItem { Value = "0" , Text = "" },
-                            new SelectListItem { Value = "1" , Text = "PP" },
-                            new SelectListItem { Value = "2" , Text = "P" },
-                            new SelectListItem { Value = "3" , Text = "M" },
-                            new SelectListItem { Value = "4" , Text = "G" },
-                            new SelectListItem { Value = "5" , Text = "GG" }
+                            new SelectListItem { Value = "PP" , Text = "PP" },
+                            new SelectListItem { Value = "P" , Text = "P" },
+                            new SelectListItem { Value = "M" , Text = "M" },
+                            new SelectListItem { Value = "G" , Text = "G" },
+                            new SelectListItem { Value = "GG" , Text = "GG" }
                         },
                         new { @class = "Produto" })
-                </p>
+                            </p>
                 <p class="lead">
                     @Html.DropDownListFor(model => model.Cor,
                         new List<SelectListItem> {
                             new SelectListItem { Value = "0" , Text = "" },
-                            new SelectListItem { Value = "1" , Text = "Colorida" },
-                            new SelectListItem { Value = "2" , Text = "Neutra" },
-                            new SelectListItem { Value = "2" , Text = "Mista" }
+                            new SelectListItem { Value = "Colorida" , Text = "Colorida" },
+                            new SelectListItem { Value = "Neutra" , Text = "Neutra" },
+                            new SelectListItem { Value = "Mista" , Text = "Mista" }
                         },
                         new { @class = "Produto" })
                             </p>
@@ -49,7 +50,8 @@
                     <a href="@Url.Action("Caixa", "Home")" class="btn btn-danger w-50 text-center me-3">
                         <i class="fas fa-undo-alt"></i> Voltar
                     </a>
-                    <button class="btn btn-success btn-agregar-carrito flex-shrink-0 w-50 " type="button" data-idProdu="@Html.DisplayTextFor(model => model.CodigoBarras)">
+                    <input type="hidden" name="Caixa" value="Caixa calça" />
+                    <button class="btn btn-success btn-agregar-carrito flex-shrink-0 w-50 " type="submit">
                         <i class="fas fa-cart-plus"></i> Adicionar no carrinho
                     </button>
                 </div>
@@ -57,7 +59,7 @@
         </div>
     </div>
 </section>
-
+</form>
 @*@{List<string> teste = Beeuzer.Models.Produto.GetCities();}*@
 @*<div>
         <c1-combo-box selected-index=0 case-sensitive-search="true" is-editable="true">

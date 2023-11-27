@@ -91,5 +91,20 @@ namespace Beeuzer.Models
 
             return tempProduto;
         }
+
+
+        public Int64 SelectCod(string NomeProd, string Cor, string Tamanho)
+        {
+            Conexao.Open();
+            comand.CommandText  = "select CodigoBarras from vwProduto where NomeProd = @Nome and Cor = @Cor and Tamanho = @Tamanho";
+            comand.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = NomeProd;
+            comand.Parameters.Add("@Cor", MySqlDbType.VarChar).Value = Cor;
+            comand.Parameters.Add("@Tamanho", MySqlDbType.VarChar).Value = Tamanho;
+            comand.Connection = Conexao;
+            object result = comand.ExecuteScalar();
+            Int64 CodBarras = Convert.ToInt64(result);
+
+            return CodBarras;
+        }
     }
 }
