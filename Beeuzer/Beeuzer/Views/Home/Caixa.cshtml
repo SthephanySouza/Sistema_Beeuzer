@@ -7,94 +7,102 @@
             <a href="@Url.Action("Caixa_Camisa", "Produto")">
                 <div class="caixa_camisas">
                     <h1>Caixa de Camisas</h1>
-                    <img class="img_camisa" src="">
+                    <img class="img_camisa" src="~/img/Camisas.jpeg">
                 </div>
             </a>
 
-            <a href="@Url.Action("Caixa_Calsa", "Produto")">
-                <div class="caixa_calsas">
-                    <h1>Caixa de Calsas</h1>
-                    <img class="img_calsa" src="">
+            <a href="@Url.Action("Caixa_Calca", "Produto")">
+                <div class="caixa_calcas">
+                    <h1>Caixa de Calças</h1>
+                    <img class="img_calca" src="~/img/Calca.jpeg">
                 </div>
             </a>
 
             <a href="@Url.Action("Caixa_Doacao", "Produto")">
                 <div class="caixa_doacao">
                     <h1>Caixa para Doação</h1>
-                    <img class="img_doacao" src="">
+                    <img class="img_doacao" src="~/img/Doacoes.jpeg">
                 </div>
             </a>
             <br>
         </div>
     </section>
+</main>
 
-    <style>
-        .caixas{
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
+<style>
+    body {
+        background: linear-gradient(360deg, #673088 5%, #34029d 95%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
 
-        .caixas .img_camisa{
-            width: 70px;
-            height: 80px;
-            margin-left: 130px;
+
+    .caixas {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+        .caixas .img_camisa {
+            width: 250px;
+            height: 300px;
+            margin-left: 45px;
             margin-top: 50px;
         }
 
-        .caixas .img_calsa{
+        .caixas .img_calca {
             width: 90px;
             height: 80px;
             margin-left: 130px;
             margin-top: 50px;
         }
 
-        .caixas .img_doacao{
+        .caixas .img_doacao {
             width: 120px;
             height: 80px;
             margin-left: 130px;
             margin-top: 50px;
         }
 
-        #caixas_link .caixas h1 {
-            color: black;
-            text-align: center;
-            font-size: 25px;
-            font-style: normal;
-            padding-top: 25px;
-            font-size: 30px;
-            color: #FFFFFF;
-        }
+    #caixas_link .caixas h1 {
+        color: black;
+        text-align: center;
+        font-size: 25px;
+        font-style: normal;
+        padding-top: 25px;
+        font-size: 30px;
+        color: #FFFFFF;
+    }
 
-        .caixas .caixa_camisas {
-            width: 350px;
-            height: 550px;
-            background: #CC78FF;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 30px;
-        }
+    .caixas .caixa_camisas {
+        width: 350px;
+        height: 550px;
+        background: #CC78FF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 30px;
+    }
 
-        .caixas .caixa_calsas {
-            width: 350px;
-            height: 550px;
-            background: #CC78FF;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 30px;
-        }
+    .caixas .caixa_calcas {
+        width: 350px;
+        height: 550px;
+        background: #CC78FF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 30px;
+    }
 
-        .caixas .caixa_doacao {
-            width: 350px;
-            height: 550px;
-            background: #CC78FF;
-            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
-            border-radius: 30px;
-        }
+    .caixas .caixa_doacao {
+        width: 350px;
+        height: 550px;
+        background: #CC78FF;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 30px;
+    }
 
-        .caixas a {
-            font-style: normal;
-            font-weight: 700;
-            font-size: 15px;
-            text-decoration: none;
-        }
-    </style>
-</main>
+    .caixas a {
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        text-decoration: none;
+    }
+</style>

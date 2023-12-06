@@ -70,11 +70,11 @@ namespace Beeuzer.Areas.Funcionario.Controllers
                         {
                             Pedido pedido = new Pedido
                             {
-                                NumeroPedido = Convert.ToInt32(reader["NumeroPedido"]),
-                                NomeCli = reader["NomeCli"].ToString(),
-                                DataPedido = Convert.ToDateTime(reader["DataPedido"]),
-                                DataPrazo = Convert.ToDateTime(reader["DataPrazo"]),
-                                TotalPedido = Convert.ToDecimal(reader["TotalPedido"])
+                                //NumeroPedido = Convert.ToInt32(reader["NumeroPedido"]),
+                                //NomeCli = reader["NomeCli"].ToString(),
+                                //DataPedido = Convert.ToDateTime(reader["DataPedido"]),
+                                //DataPrazo = Convert.ToDateTime(reader["DataPrazo"]),
+                                //TotalPedido = Convert.ToDecimal(reader["TotalPedido"])
                             };
 
                             pedidos.Add(pedido);

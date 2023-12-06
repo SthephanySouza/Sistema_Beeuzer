@@ -87,5 +87,17 @@ namespace Beeuzer.Models
 
             return TempCliente;
         }
+
+        public Int64 SelectCodCli(string NomeCli)
+        {
+            Conexao.Open();
+            comand.CommandText = "select IdCli from tbl_cliente where NomeCli = @Nome";
+            comand.Parameters.Add("@Nome", MySqlDbType.VarChar).Value = NomeCli;
+            comand.Connection = Conexao;
+            object result = comand.ExecuteScalar();
+            Int64 IdCli = Convert.ToInt64(result);
+            Conexao.Close();
+            return IdCli;
+        }
     }
 }

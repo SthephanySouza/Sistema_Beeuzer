@@ -190,6 +190,7 @@
     <Compile Include="Controllers\AutenticacaoController.cs" />
     <Compile Include="Controllers\CarrinhoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PedidoController.cs" />
     <Compile Include="Controllers\ProdutoController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -197,13 +198,19 @@
     <Compile Include="Models\Carrinho.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Endereco.cs" />
+    <Compile Include="Models\NotaFiscal.cs" />
+    <Compile Include="Models\Pagamento.cs" />
     <Compile Include="Models\Pedido.cs" />
     <Compile Include="Models\Produto.cs" />
+    <Compile Include="Models\TipoPaga.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\Hash.cs" />
     <Compile Include="ViewModel\CadastroViewModel.cs" />
     <Compile Include="ViewModel\CarrinhoViewModel.cs" />
+    <Compile Include="ViewModel\EnderecoViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\NotaViewModel.cs" />
+    <Compile Include="ViewModel\PagamentoViewModel.cs" />
     <Compile Include="ViewModel\ProdutoViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -226,7 +233,12 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="img\Cart.png" />
+    <Content Include="img\Final.png" />
+    <Content Include="img\Home.jpeg" />
     <Content Include="img\icon_user.png" />
+    <Content Include="img\logo2.png" />
+    <Content Include="img\Truck.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -289,15 +301,17 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Autenticacao\Login.cshtml" />
     <Content Include="Views\Autenticacao\Cadastro.cshtml" />
-    <Content Include="Views\Produto\Caixa_Calsa.cshtml" />
+    <Content Include="Views\Produto\Caixa_Calca.cshtml" />
     <Content Include="Views\Produto\Caixa_Camisa.cshtml" />
-    <Content Include="Views\Carrinho\Carrinho.cshtml" />
     <Content Include="Views\Produto\Caixa_Doacao.cshtml" />
+    <Content Include="Views\Carrinho\Carrinho.cshtml" />
+    <Content Include="Views\Pedido\Cartao.cshtml" />
+    <Content Include="Views\Pedido\Endereco.cshtml" />
+    <Content Include="Views\Pedido\NotaFiscal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Funcionario\Data\" />
-    <Folder Include="Views\Funcionario\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,0 +1,148 @@
+﻿@model Beeuzer.ViewModel.EnderecoViewModel
+
+@{
+    ViewBag.Title = "Endereço";
+}
+
+<h2>CADASTRE SEU ENDEREÇO <br /> PARA FINALIZAR SUA COMPRA!</h2>
+
+<br />
+<br />
+<div class="forms">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal" id="forms">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Cep, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Cep, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Cep, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Logradouro, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Logradouro, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Logradouro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.NumEndereco, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NumEndereco, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumEndereco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.CompEndereco, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CompEndereco, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CompEndereco, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.NomeCidade, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NomeCidade, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NomeCidade, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.NomeBairro, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NomeBairro, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NomeBairro, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group" id="fin">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Finalizar Compra" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+<img src="~/img/Truck.png" id="img" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<style>
+    body {
+        background: linear-gradient(360deg, #673088 5%, #34029d 95%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+
+    h2 {
+        color: white;
+        margin-top: 40px;
+    }
+
+    .form-group {
+        color: white;
+        margin-left: 50px;
+    }
+
+    #teste2 {
+        color: white;
+        width: 215px;
+        height: 52px;
+        flex-shrink: 0;
+        border-radius: 25px;
+        background: linear-gradient(0deg, #BF5FFA 0%, #BF5FFA 100%);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    #cad {
+        width: 300px;
+        height: 30px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        border: 1px solid #D539EE;
+        color: rgba(255, 255, 255, 0.00);
+        box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .forms {
+        width: 550px;
+        height: 720px;
+        flex-shrink: 0;
+        border-radius: 55px;
+        border: 2px solid #FFF;
+        background: rgba(255, 255, 255, 0.00);
+    }
+
+    #fin {
+        width: 150px;
+        height: 40px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        border: 2px solid #F6BE2C;
+        background: #F6BE2C;
+        backdrop-filter: blur(2px);
+        position: relative;
+        margin-top: 15px;
+    }
+
+    #img {
+        float: right;
+        margin-top: -580px;
+        height: 475px;
+        width: 475px;
+    }
+</style>

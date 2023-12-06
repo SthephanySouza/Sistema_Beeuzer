@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Beeuzer.ViewModel.NotaViewModel>
+
+@{
+    ViewBag.Title = "NotaFiscal";
+}
+
+<div class="forms">
+    <h2>A Beeüzer agradece pela preferencia!</h2>
+</div>
+
+<img src="~/img/Final.png" id="img" />
+
+<style>
+    body {
+        background: linear-gradient(360deg, #673088 5%, #34029d 95%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+
+    h2 {
+        color: white;
+        padding-top: 85px;
+        text-align: center;
+        font-family: Karantina;
+        font-size: 46px;
+        color: #34029D;
+    }
+
+    .forms {
+        width: 505px;
+        height: 280px;
+        flex-shrink: 0;
+        border-radius: 55px;
+        background: #F6BE2C;
+        border-radius: 55px;
+        margin-top: 245px;
+    }
+
+    #img {
+        float: right;
+        margin-top: -410px;
+        height: 475px;
+        width: 475px;
+    }
+</style>

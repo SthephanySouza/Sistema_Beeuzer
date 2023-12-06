@@ -1,11 +1,10 @@
 ﻿@model Beeuzer.Models.Produto
 
 @{
-    ViewBag.Title = "Caixa Doação";
+    ViewBag.Title = "Caixa Calça";
 }
 
-<h2>Caixa de Doação</h2>
-
+<h2>Caixa de Calças</h2>
 
 <form name="frmcarrinho" method="post" action="@Url.Action("Carrinho", "Carrinho")">
     <section class="py-5">
@@ -15,7 +14,7 @@
                     <div class="col-md-6" id="form">
                         <p class="lead" id="tamanho">
                             @Html.DropDownListFor(model => model.Tamanho,
-                                                              new List<SelectListItem> {
+                                                         new List<SelectListItem> {
                             new SelectListItem { Value = "" , Text = "Escolha o Tamanho" },
                             new SelectListItem { Value = "PP" , Text = "PP" },
                             new SelectListItem { Value = "P" , Text = "P" },
@@ -23,17 +22,17 @@
                             new SelectListItem { Value = "G" , Text = "G" },
                             new SelectListItem { Value = "GG" , Text = "GG" }
 },
-                                                              new { @class = "Produto" })
+                                                         new { @class = "Produto" })
                         </p>
                         <p class="lead" id="cor">
                             @Html.DropDownListFor(model => model.Cor,
-                                                              new List<SelectListItem> {
+                                                         new List<SelectListItem> {
                             new SelectListItem { Value = "" , Text = "Escolha a Cor" },
                             new SelectListItem { Value = "Colorida" , Text = "Colorida" },
                             new SelectListItem { Value = "Neutra" , Text = "Neutra" },
                             new SelectListItem { Value = "Mista" , Text = "Mista" }
 },
-                                                              new { @class = "Produto" })
+                                                         new { @class = "Produto" })
                         </p>
 
                         <br />

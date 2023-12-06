@@ -1,0 +1,149 @@
+﻿@model Beeuzer.ViewModel.PagamentoViewModel
+
+@{
+    ViewBag.Title = "Cartao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CADASTRE SEU CARTÃO!</h2>
+
+<br /><br />
+<div class="forms">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.NomeCli, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NomeCli, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NomeCli, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.DataVali, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DataVali, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DataVali, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.CVV, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.CVV, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CVV, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.NumCartao, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.NumCartao, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NumCartao, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.TipoCartao, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.TipoCartao)
+                        @Html.ValidationMessageFor(model => model.TipoCartao, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+                <br />
+            <div class="form-group">
+                @Html.LabelFor(model => model.Senha, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Senha, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Senha, "", new { @class = "text-danger" })
+                </div>
+            </div>
+                <br />
+            <div class="form-group" id="fin">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Finalizar cadastro cartão" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<img src="~/img/Cart.png" id="img" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+<style>
+    body {
+        background: linear-gradient(360deg, #673088 5%, #34029d 95%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+
+    h2 {
+        margin-top: 40px;
+        color: white;
+    }
+
+    .form-group {
+        color: white;
+        margin-left: 50px;
+    }
+
+    #teste2 {
+        color: white;
+        width: 215px;
+        height: 52px;
+        flex-shrink: 0;
+        border-radius: 25px;
+        background: linear-gradient(0deg, #BF5FFA 0%, #BF5FFA 100%);
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    #cad {
+        width: 300px;
+        height: 30px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        border: 1px solid #D539EE;
+        color: rgba(255, 255, 255, 0.00);
+        box-shadow: 0px 6px 4px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .forms {
+        width: 550px;
+        height: 720px;
+        flex-shrink: 0;
+        border-radius: 55px;
+        border: 2px solid #FFF;
+        background: rgba(255, 255, 255, 0.00);
+    }
+
+    #fin {
+        width: 200px;
+        height: 40px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        border: 2px solid #F6BE2C;
+        background: #F6BE2C;
+        backdrop-filter: blur(2px);
+        position: relative;
+        margin-top: 15px;
+    }
+
+    #img {
+        float: right;
+        margin-top: -660px;
+        height: 520px;
+        width: 660px;
+    }
+</style>

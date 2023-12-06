@@ -16,8 +16,6 @@ namespace Beeuzer.Controllers
 
         public ActionResult Caixa()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
     }

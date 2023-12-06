@@ -1,46 +1,144 @@
-﻿@model Beeuzer.ViewModel.ProdutoViewModel
+﻿@model Beeuzer.Models.Produto
 
 @{
-    ViewBag.Title = "Caixa_Camisa";
+    ViewBag.Title = "Caixa Camisa";
 }
 
-<h2>Caixa_Camisa</h2>
+<h2>Caixa de Camisas</h2>
 
-<form>
-    @Html.DropDownListFor(model => model.Tamanho,
-                          new List<SelectListItem> {
-                       new SelectListItem { Value = "0" , Text = "" },
-                       new SelectListItem { Value = "1" , Text = "PP" },
-                       new SelectListItem { Value = "2" , Text = "P" },
-                       new SelectListItem { Value = "3" , Text = "M" },
-                       new SelectListItem { Value = "4" , Text = "G" },
-                       new SelectListItem { Value = "5" , Text = "GG" }
-                                            },
-                          new { @class = "Produto" })
+<form name="frmcarrinho" method="post" action="@Url.Action("Carrinho", "Carrinho")">
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="d-flex flex-row-reverse bd-highlight">
+                    <div class="col-md-6" id="form">
+                        <p class="lead" id="tamanho">
+                            @Html.DropDownListFor(model => model.Tamanho,
+                                                              new List<SelectListItem> {
+                            new SelectListItem { Value = "" , Text = "Escolha o Tamanho" },
+                            new SelectListItem { Value = "PP" , Text = "PP" },
+                            new SelectListItem { Value = "P" , Text = "P" },
+                            new SelectListItem { Value = "M" , Text = "M" },
+                            new SelectListItem { Value = "G" , Text = "G" },
+                            new SelectListItem { Value = "GG" , Text = "GG" }
+},
+                                                              new { @class = "Produto" })
+                        </p>
+                        <p class="lead" id="cor">
+                            @Html.DropDownListFor(model => model.Cor,
+                                                              new List<SelectListItem> {
+                            new SelectListItem { Value = "" , Text = "Escolha a Cor" },
+                            new SelectListItem { Value = "Colorida" , Text = "Colorida" },
+                            new SelectListItem { Value = "Neutra" , Text = "Neutra" },
+                            new SelectListItem { Value = "Mista" , Text = "Mista" }
+},
+                                                              new { @class = "Produto" })
+                        </p>
 
-    @Html.DropDownListFor(model => model.Cor,
-                      new List<SelectListItem> {
-                   new SelectListItem { Value = "0" , Text = "" },
-                   new SelectListItem { Value = "1" , Text = "Colorida" },
-                   new SelectListItem { Value = "2" , Text = "Neutra" },
-                   new SelectListItem { Value = "2" , Text = "Mista" }
-                                        },
-                      new { @class = "Produto" })
-    <br><br>
-        <div class="quantity">
-            <button type="button" onclick="Diminuir()" id="min">-</button>
-                @{ 
-                    int Qtd = 1;
-                }
+                        <br />
+                        <p class="lead" id="qtd">
+                            <button type="button" onclick="DiminuirQtd()" id="min">-</button>
+                            @{
+                                int Qtd = 1;
+                            }
 
-                @Html.EditorFor(Model => Qtd, new { htmlAttributes = new { @id = "valor" } })
-            <button type="button" onclick="Aumentar()" id="max">+</button>
+                            @Html.EditorFor(Model => Qtd, new { htmlAttributes = new { @id = "valor" } })
+                            <button type="button" onclick="AumentarQtd()" id="max">+</button>
+                        </p>
+
+                        <br />
+                        <div class="d-flex" id="btnvoltar">
+                            <a href="@Url.Action("Caixa", "Home")" class="btn">
+                                <i class="fas fa-undo-alt"></i> Comprar
+                            </a>
+                        </div>
+
+
+                        <div class="d-flex" id="btncad">
+                            <input type="hidden" name="Caixa" value="Caixa calça" />
+                            <input type="hidden" name="NomeCli" value="@User.Identity.Name" />
+                            <button class="btn btn-agregar-carrito" type="submit">
+                                <i class="fas fa-cart-plus"></i> Adicionar no carrinho
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
-    <br><br>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Comprar" class="btn btn-default" />
-            <input type="submit" value="Carrinho" class="btn btn-default" />
-        </div>
-    </div>
+    </section>
 </form>
+
+<style>
+    body {
+        background: linear-gradient(360deg, #673088 5%, #34029d 95%);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: 100%;
+    }
+
+    h2 {
+        color: white;
+    }
+
+    p {
+        color: aliceblue;
+    }
+
+    #btnvoltar {
+        color: #570E84;
+        font-family: Istok Web;
+        font-size: 42px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        width: 90px;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 40px;
+        background: #F6BE2C;
+        align-items: center;
+        position: relative;
+        right: -10%;
+    }
+
+    #btncad {
+        color: #570E84;
+        font-family: Istok Web;
+        font-size: 22px;
+        width: 170px;
+        height: 50px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        background: #F6BE2C;
+        border-radius: 40px;
+        position: relative;
+        left: 35%;
+        margin-top: -50px;
+    }
+
+    #tamanho {
+        font-family: Istok Web;
+        align-items: center;
+    }
+
+    #cor {
+        font-family: Istok Web;
+        position: relative;
+        left: 40%;
+        margin-top: -45px;
+    }
+
+    #qtd {
+        font-family: Istok Web;
+        font-size: 15px;
+        position: relative;
+        left: 12%;
+    }
+
+    #form {
+        position: relative;
+        left: 5%;
+    }
+</style>
